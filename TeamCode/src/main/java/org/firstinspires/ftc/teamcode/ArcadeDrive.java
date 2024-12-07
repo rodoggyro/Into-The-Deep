@@ -142,15 +142,15 @@ public class ArcadeDrive extends LinearOpMode {
 
             previousButtonState = gamepad1.y;
 
-//            if (pivotState == 0) {
-//                pivotServo.setPosition(0);
-//            } else if (pivotState == 1){
-//                pivotServo.setPosition(0.15);
-//            } else {
-//                pivotServo.setPosition(0.25);
-//            }
+            if (pivotState == 0) {
+                pivotServo.setPosition(0.45);
+            } else if (pivotState == 1){
+                pivotServo.setPosition(0.285);
+            } else {
+                pivotServo.setPosition(0.08);
+            }
 
-            pivotServo.setPosition(gamepad2.left_stick_y);
+//            pivotServo.setPosition(gamepad2.left_stick_y);
 
             drive.updatePoseEstimate();
 
