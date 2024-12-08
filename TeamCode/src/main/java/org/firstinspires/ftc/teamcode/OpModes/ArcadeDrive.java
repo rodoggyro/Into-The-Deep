@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -13,6 +13,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Drawing;
+import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
+
 
 @TeleOp
 
@@ -21,7 +24,7 @@ public class ArcadeDrive extends LinearOpMode {
     final long debounceDelay = 200;
 
     DcMotor winch;
-    DcMotor arm;
+    DcMotor lift;
 
     Servo hanging;
     Servo claw;
@@ -54,13 +57,13 @@ public class ArcadeDrive extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        SparkFunOTOSDrive drive = new SparkFunOTOSDrive(hardwareMap, new Pose2d(56, -56, Math.toRadians(180)));
+        SparkFunOTOSDrive drive = new SparkFunOTOSDrive(hardwareMap, new Pose2d(0, -0, Math.toRadians(0)));
 
         telemetry.addData("linear Scalar", drive.linearScalarWorks);
         telemetry.update();
 
-        arm = hardwareMap.dcMotor.get("arm");
-        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift = hardwareMap.dcMotor.get("arm");
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         pivotServo = hardwareMap.servo.get("pivotServo");
         pivotServo.setPosition(0);
@@ -85,11 +88,11 @@ public class ArcadeDrive extends LinearOpMode {
             ));
 
             if (gamepad1.left_trigger > 0.1){
-                arm.setPower(gamepad1.left_trigger);
+                lift.setPower(gamepad1.left_trigger);
             } else if (gamepad1.right_trigger > 0.1){
-                arm.setPower(-gamepad1.right_trigger);
+                lift.setPower(-gamepad1.right_trigger);
             } else {
-                arm.setPower(0);
+                lift.setPower(0);
             }
 
             if (gamepad1.x && !previousButtonState && clawDebounceComplete) {
