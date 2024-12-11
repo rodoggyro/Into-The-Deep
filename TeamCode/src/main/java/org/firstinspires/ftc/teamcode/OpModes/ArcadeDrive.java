@@ -44,15 +44,6 @@ public class ArcadeDrive extends LinearOpMode {
     boolean pivotDebounceComplete = true;
     long pivotDebounceStartTime = 0;
 
-    // Defining drive variables
-    boolean strafeLeft;
-    boolean strafeRight;
-    double throttle;
-    double turn;
-
-    double strafePower = 0.75;
-
-
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());

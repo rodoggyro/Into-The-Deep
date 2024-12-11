@@ -69,7 +69,7 @@ public final class RedBasket extends LinearOpMode {
         private Servo pivot;
 
         public Pivot (HardwareMap hardwareMap) {
-            pivot = hardwareMap.get(Servo.class, "pivot");
+            pivot = hardwareMap.get(Servo.class, "pivotServo");
         }
 
         /*
@@ -191,23 +191,20 @@ public final class RedBasket extends LinearOpMode {
         Claw claw = new Claw(hardwareMap);
 
         //claw close
-        Actions.runBlocking(
-                claw.new clawClose()
-        );
 
         waitForStart();
 
-        Actions.runBlocking(
-                new SequentialAction(
-                        //lift up to top basket
-                        lift.new LiftSetPos(0),
-                        drive.actionBuilder(beginPose).splineTo(new Vector2d(-57.4, -55), Math.toRadians(225)).build(),
-                        claw.new clawOpen(),
-                        drive.actionBuilder(new Pose2d(-57.4, -55, Math.toRadians(225))).turn(Math.atan((-57.4+47.7)/(-55+40))-Math.toRadians(15)).build(),
-                        //lift down
-                        lift.new LiftSetPos(0)
-                )
-        );
+//        Actions.runBlocking(
+//                new SequentialAction(
+//                        //lift up to top basket
+//                        lift.new LiftSetPos(0),
+//                        drive.actionBuilder(beginPose).splineTo(new Vector2d(-57.4, -55), Math.toRadians(225)).build(),
+//                        claw.new clawOpen(),
+//                        drive.actionBuilder(new Pose2d(-57.4, -55, Math.toRadians(225))).turn(Math.atan((-57.4+47.7)/(-55+40))-Math.toRadians(15)).build(),
+//                        //lift down
+//                        lift.new LiftSetPos(0)
+//                )
+//        );
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
@@ -222,30 +219,30 @@ public final class RedBasket extends LinearOpMode {
                         //close claw
                         //pivot up
                         //lift up to top basket
-                        .splineToSplineHeading(new Pose2d(-57.4, -55, Math.toRadians(225)), Math.toRadians(225))
-                        //claw open
-                        //lift down
-                        .splineTo(new Vector2d(-57.4, -40), Math.toRadians(90))
-                        //pivot down
-                        .waitSeconds(1.5)
-                        //close claw
-                        //pivot up
-                        //lift up to top basket
-                        .splineTo(new Vector2d(-57.4, -55), Math.toRadians(225))
-                        //claw open
-                        //lift down
-                        .splineTo(new Vector2d(-55, -24), Math.toRadians(180))
-                        //pivot down
-                        .waitSeconds(1.5)
-                        //close claw
-                        //pivot up
-                        //lift up to top basket
-                        .splineTo(new Vector2d(-57.4, -55), Math.toRadians(225))
-                        //claw open
-                        //lift down
-                        .lineToY(-40)
-                        .splineTo(new Vector2d(-45, 0), Math.toRadians(180))
-                        .lineToX(-26)
+//                        .splineToSplineHeading(new Pose2d(-57.4, -55, Math.toRadians(225)), Math.toRadians(225))
+//                        //claw open
+//                        //lift down
+//                        .splineTo(new Vector2d(-57.4, -40), Math.toRadians(90))
+//                        //pivot down
+//                        .waitSeconds(1.5)
+//                        //close claw
+//                        //pivot up
+//                        //lift up to top basket
+//                        .splineTo(new Vector2d(-57.4, -55), Math.toRadians(225))
+//                        //claw open
+//                        //lift down
+//                        .splineTo(new Vector2d(-55, -24), Math.toRadians(180))
+//                        //pivot down
+//                        .waitSeconds(1.5)
+//                        //close claw
+//                        //pivot up
+//                        //lift up to top basket
+//                        .splineTo(new Vector2d(-57.4, -55), Math.toRadians(225))
+//                        //claw open
+//                        //lift down
+//                        .lineToY(-40)
+//                        .splineTo(new Vector2d(-45, 0), Math.toRadians(180))
+//                        .lineToX(-26)
                         .build());
     }
 }
