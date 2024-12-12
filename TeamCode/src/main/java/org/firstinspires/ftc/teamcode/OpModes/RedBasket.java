@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.OpModes;
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
@@ -175,11 +176,10 @@ public final class RedBasket extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         leftSensor = hardwareMap.get(DistanceSensor.class, "left");
 
-//        FtcDashboard dashboard = FtcDashboard.getInstance();
-//        Telemetry dashbordTelemetry = dashboard.getTelemetry();
-//        dashbordTelemetry.addData("Starting Pos X", -32);
-//        dashbordTelemetry.addData("Starting Pos Y", -72 + leftSensor.getDistance(DistanceUnit.INCH) + 9);
-//        dashbordTelemetry.update();
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
+        telemetry.addData("X Position", -(72 - (leftSensor.getDistance(DistanceUnit.INCH) + 9)));
+        telemetry.update();
 
 //        Pose2d beginPose = new Pose2d(-34, -62, Math.toRadians(90));
         Pose2d beginPose = new Pose2d(-(72 - leftSensor.getDistance(DistanceUnit.INCH) - 9), -62, Math.toRadians(90));
