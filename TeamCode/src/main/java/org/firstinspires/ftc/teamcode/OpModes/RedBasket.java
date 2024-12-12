@@ -42,10 +42,10 @@ public final class RedBasket extends LinearOpMode {
             private boolean initialized = false;
             private int target;
             /*
-            Top Basket:
-            Bottom Basket:
-            Top Chamber:
-            Bottom Chamber:
+            Top Basket: -5400
+            Bottom Basket: -2800
+            Top Chamber: -3900
+            Bottom Chamber: -2200
             Bottom of the lift: 0
              */
 
@@ -54,12 +54,10 @@ public final class RedBasket extends LinearOpMode {
             }
 
             public boolean run(@NonNull TelemetryPacket packet) {
-                if (!initialized) {
-                    initialized = true;
-                    lift.setTargetPosition(target);
-                    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    lift.setPower(1);
-                }
+                initialized = true;
+                lift.setTargetPosition(target);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(1);
 
                 return true;
             }
@@ -207,15 +205,20 @@ public final class RedBasket extends LinearOpMode {
 //        );
 
         Actions.runBlocking(
-                drive.actionBuilder(beginPose)
-                        //lift up to top basket
-                        .splineTo(new Vector2d(-57.4, -55), Math.toRadians(225))
-                        //claw open
-                        .turn(Math.atan((-57.4+47.7)/(-55+40))-Math.toRadians(15))
-                        //lift down
-                        .lineToYLinearHeading(-40, Math.toRadians(90))
-                        //pivot down
-                        .waitSeconds(1.5)
+                new SequentialAction(
+                        lift. new LiftSetPos(-5400),
+                        drive.actionBuilder(beginPose)
+                                //lift up to top basket
+                                .splineTo(new Vector2d(-57.4, -55), Math.toRadians(225))
+                                //claw open
+                                .turn(Math.atan((-57.4+47.7)/(-55+40))-Math.toRadians(15))
+                                //lift down
+                                .lineToYLinearHeading(-40, Math.toRadians(90))
+                                //pivot down
+                                .waitSeconds(1.5)
+                                .build()
+                )
+        );
                         //close claw
                         //pivot up
                         //lift up to top basket
@@ -243,6 +246,5 @@ public final class RedBasket extends LinearOpMode {
 //                        .lineToY(-40)
 //                        .splineTo(new Vector2d(-45, 0), Math.toRadians(180))
 //                        .lineToX(-26)
-                        .build());
     }
 }

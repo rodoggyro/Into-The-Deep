@@ -55,6 +55,8 @@ public class ArcadeDrive extends LinearOpMode {
 
         lift = hardwareMap.dcMotor.get("arm");
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         pivotServo = hardwareMap.servo.get("pivotServo");
         pivotServo.setPosition(0);
@@ -152,6 +154,7 @@ public class ArcadeDrive extends LinearOpMode {
             telemetry.addData("y", drive.pose.position.y);
             telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
             telemetry.addData("pivot Position", pivotServo.getPosition());
+            telemetry.addData("lift", lift.getCurrentPosition());
             telemetry.update();
 
             TelemetryPacket packet = new TelemetryPacket();
