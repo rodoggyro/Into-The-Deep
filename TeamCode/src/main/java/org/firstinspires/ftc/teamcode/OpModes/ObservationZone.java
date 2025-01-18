@@ -35,23 +35,28 @@ public class ObservationZone extends LinearOpMode {
 
         waitForStart();
 
-        frontLeft.setTargetPosition(1500);
-        frontRight.setTargetPosition(1500);
-        backLeft.setTargetPosition(1500);
-        backRight.setTargetPosition(1500);
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontLeft.setPower(0.5);
+        frontRight.setPower(0.5);
+        backRight.setPower(0.5);
+        backLeft.setPower(0.5);
 
-        frontLeft.setPower(1);
-        frontRight.setPower(1);
-        backRight.setPower(1);
-        backLeft.setPower(1);
+        sleep(1500);
 
-        while (frontLeft.isBusy()) {
-            sleep(100);
-        }
+        frontLeft.setPower(0.5);
+        frontRight.setPower(-0.5);
+        backRight.setPower(0.5);
+        backLeft.setPower(-0.5);
+
+        sleep(500);
+
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backRight.setPower(0);
+        backLeft.setPower(0);
     }
 }
