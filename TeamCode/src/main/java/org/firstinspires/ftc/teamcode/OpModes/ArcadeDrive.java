@@ -88,7 +88,6 @@ public class ArcadeDrive extends LinearOpMode {
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         pivotServo = hardwareMap.servo.get("pivotServo");
-        pivotServo.setPosition(0.027);
 
         //Hanging
         hanging = hardwareMap.servo.get("hanging");
@@ -101,6 +100,8 @@ public class ArcadeDrive extends LinearOpMode {
         ElapsedTime timer = new ElapsedTime();
 
         waitForStart();
+
+        pivotServo.setPosition(0.027);
 
         double turning;
 
