@@ -56,8 +56,6 @@ public final class RedBasket extends LinearOpMode {
         Pose2d currentPose = beginPose;
         SparkFunOTOSDrive drive = new SparkFunOTOSDrive(hardwareMap, beginPose);
 
-        Lift liftSystem = new Lift(hardwareMap);
-
         claw = hardwareMap.get(Servo.class, "claw");
 //        lift = new Motor(hardwareMap, "arm", 28*20, (double) 6000 /20);
         lift = hardwareMap.get(DcMotor.class, "arm");
@@ -75,20 +73,15 @@ public final class RedBasket extends LinearOpMode {
 
         waitForStart();
 
+        //TODO: add specimen placing
         Actions.runBlocking(drive.actionBuilder(beginPose)
                 .splineTo(new Vector2d(-9.75, -28), Math.toRadians(90))
                 .waitSeconds(1.5)
-    //                                .strafeTo(new Vector2d(-9.75, -35))
                 .strafeTo(new Vector2d(-20, -45))
                 .strafeTo(new Vector2d(-47, -35))
     //                        .strafeToSplineHeading(new Vector2d(-57.4, -55), Math.toRadians(225))
     //                        .strafeToSplineHeading(new Vector2d(-55, -35), Math.toRadians(90))
                 .build()
-//                    new Lift.GrabSample(Lift.SAMPLE_POSITION.GROUND),
-//                    new SleepAction(0.5),
-//                    liftSystem.closeClaw(),
-//                    new' SleepAction(0.5),
-//                    new Lift.ResetPivot(),)
         );
 
         pivot.setPosition(0.5);
@@ -111,5 +104,11 @@ public final class RedBasket extends LinearOpMode {
                 .build()
         );
 
+        claw.setPosition(0);
+
+        //TODO: go to spike mark 2
+        //TODO: pick up sample
+        //TODO: drop sample in low bucket
+        //TODO: park
     }
 }
