@@ -39,6 +39,7 @@ public final class RedBasket extends LinearOpMode {
 //        lift = new Motor(hardwareMap, "arm", 28*20, (double) 6000 /20);
         lift = hardwareMap.get(DcMotor.class, "arm");
         pivot = hardwareMap.get(Servo.class, "pivotServo");
+        pivot.setPosition(0.027);
 
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
