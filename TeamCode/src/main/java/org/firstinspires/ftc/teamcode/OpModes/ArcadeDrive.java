@@ -91,7 +91,7 @@ public class ArcadeDrive extends LinearOpMode {
 
         //Hanging
         hanging = hardwareMap.servo.get("hanging");
-        hanging.setPosition(0);
+
         winch = hardwareMap.dcMotor.get("winch");
 
         //Servos
@@ -102,6 +102,7 @@ public class ArcadeDrive extends LinearOpMode {
         waitForStart();
 
         pivotServo.setPosition(0.027);
+        hanging.setPosition(0);
 
         double turning;
 
@@ -134,26 +135,34 @@ public class ArcadeDrive extends LinearOpMode {
                 ));
             }
 
-            if ((lift.getCurrentPosition() > -2589)){
-                if (gamepad2.left_trigger > 0.1){
-                    lift.setPower(gamepad2.left_trigger);
-                } else if (gamepad2.right_trigger > 0.1){
-                    lift.setPower(-gamepad2.right_trigger);
-                } else {
-                    lift.setPower(0);
-                }
-            } else if (lift.getCurrentPosition() <= -2589) {
-                if (gamepad2.left_trigger > 0.1){
-                    lift.setPower(gamepad2.left_trigger);
-                } else {
-                    lift.setPower(0);
-                }
+            if (gamepad2.left_trigger > 0.1){
+                lift.setPower(gamepad2.left_trigger);
+            } else if (gamepad2.right_trigger > 0.1){
+                lift.setPower(-gamepad2.right_trigger);
+            } else {
+                lift.setPower(0);
             }
 
-            if (gamepad2.back){
-                lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            }
+//            if ((lift.getCurrentPosition() > -2589)){
+//                if (gamepad2.left_trigger > 0.1){
+//                    lift.setPower(gamepad2.left_trigger);
+//                } else if (gamepad2.right_trigger > 0.1){
+//                    lift.setPower(-gamepad2.right_trigger);
+//                } else {
+//                    lift.setPower(0);
+//                }
+//            } else if (lift.getCurrentPosition() <= -2589) {
+//                if (gamepad2.left_trigger > 0.1){
+//                    lift.setPower(gamepad2.left_trigger);
+//                } else {
+//                    lift.setPower(0);
+//                }
+//            }
+//
+//            if (gamepad2.back){
+//                lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//                lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            }
 
             if (gamepad2.b && !previousButtonState && clawDebounceComplete) {
                 clawOpen = !clawOpen;
@@ -168,7 +177,7 @@ public class ArcadeDrive extends LinearOpMode {
             previousButtonState = gamepad2.b;
 
             if (clawOpen) {
-                claw.setPosition(1);
+                claw.setPosition(0.3);
             } else {
                 claw.setPosition(0);
             }
@@ -219,7 +228,7 @@ public class ArcadeDrive extends LinearOpMode {
                     pivotServo.setPosition(0.33);
                     break;
                 case 2:
-                    pivotServo.setPosition(0.5);
+                    pivotServo.setPosition(0.55);
                     break;
             }
 
