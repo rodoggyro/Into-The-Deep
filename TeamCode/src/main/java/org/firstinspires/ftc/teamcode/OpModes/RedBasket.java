@@ -122,9 +122,57 @@ public final class RedBasket extends LinearOpMode {
 
         claw.setPosition(0);
 
-        //TODO: go to spike mark 2
-        //TODO: pick up sample
-        //TODO: drop sample in low bucket
-        //TODO: park
+        sleep(250);
+
+        lift.setTargetPosition(0);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(1);
+
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(-57.4, -55, Math.toRadians(225)))
+                .strafeToSplineHeading(new Vector2d(-57.4, -40), Math.toRadians(90))
+                .build()
+        );
+
+        while (lift.isBusy()) {
+            sleep(10);
+        }
+
+        while (timer.time() < 1000) {
+            double target = (0.1666 * Math.log(timer.time()) + 1);
+            pivot.setPosition(target);
+        }
+
+//        pivot.setPosition(0.53);
+//        sleep(750);
+//        claw.setPosition(0.3);
+//        sleep(500);
+//        pivot.setPosition(0.027);
+//
+//        lift.setTargetPosition(-2750);
+//        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        while (lift.isBusy()) {
+//            lift.setPower(-1);
+//            sleep(10);
+//        }
+//
+//        Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-57.4, -40), Math.toRadians(90)))
+//                .strafeToSplineHeading(new Vector2d(-57.4, -55), Math.toRadians(225))
+//                .build()
+//        );
+//
+//        claw.setPosition(0);
+//        sleep(250);
+//        lift.setTargetPosition(0);
+//        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        lift.setPower(1);
+//
+//        Actions.runBlocking(drive.actionBuilder(new Pose2d(-57.4, -55, Math.toRadians(225)))
+//                .splineTo(new Vector2d(-55, -24), Math.toRadians(180))
+//                .build()
+//        );
+//
+//        while(lift.isBusy()) {
+//            sleep(10);
+//        }
     }
 }
