@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous (name="Bucket with preload")
+@Autonomous (name="Bucket Sample")
 public class BucketSample extends LinearOpMode {
     DcMotor frontLeft;
     DcMotor frontRight;
