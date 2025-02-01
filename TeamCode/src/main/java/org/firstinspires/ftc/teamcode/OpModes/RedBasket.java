@@ -100,7 +100,7 @@ public final class RedBasket extends LinearOpMode {
             pivot.setPosition(target);
         }
 
-        pivot.setPosition(0.5);
+        pivot.setPosition(0.53);
         sleep(750);
         claw.setPosition(0.3);
         sleep(500);
