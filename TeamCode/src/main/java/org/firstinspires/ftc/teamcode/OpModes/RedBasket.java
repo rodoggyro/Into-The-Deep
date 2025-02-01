@@ -65,8 +65,21 @@ public final class RedBasket extends LinearOpMode {
         lift.setPower(0);
 
         Actions.runBlocking(drive.actionBuilder(beginPose)
-                .splineTo(new Vector2d(-9.75, -28), Math.toRadians(90))
-                .waitSeconds(1.5)
+                .splineTo(new Vector2d(-9.75, -32), Math.toRadians(90))
+                .build()
+        );
+
+        pivot.setPosition(0.15);
+
+        lift.setTargetPosition(0);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(1);
+        sleep(500);
+
+        claw.setPosition(0);
+
+        //TODO: add specimen placing
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-9.75, -28), Math.toRadians(90)))
                 .strafeTo(new Vector2d(-20, -45))
                 .strafeTo(new Vector2d(-45, -35))
     //                        .strafeToSplineHeading(new Vector2d(-57.4, -55), Math.toRadians(225))
