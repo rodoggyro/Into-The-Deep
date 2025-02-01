@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -40,6 +41,7 @@ public final class RedBasket extends LinearOpMode {
         lift = hardwareMap.get(DcMotor.class, "arm");
         pivot = hardwareMap.get(Servo.class, "pivotServo");
         pivot.setPosition(0.027);
+        claw.setPosition(0.3);
 
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -53,16 +55,30 @@ public final class RedBasket extends LinearOpMode {
 
         waitForStart();
 
-        //TODO: add specimen placing
+        lift.setTargetPosition(-2600);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(-1);
+        while (lift.isBusy()) {
+            sleep(10);
+        }
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift.setPower(0);
+
         Actions.runBlocking(drive.actionBuilder(beginPose)
                 .splineTo(new Vector2d(-9.75, -28), Math.toRadians(90))
                 .waitSeconds(1.5)
                 .strafeTo(new Vector2d(-20, -45))
-                .strafeTo(new Vector2d(-47, -35))
+                .strafeTo(new Vector2d(-45, -35))
     //                        .strafeToSplineHeading(new Vector2d(-57.4, -55), Math.toRadians(225))
     //                        .strafeToSplineHeading(new Vector2d(-55, -35), Math.toRadians(90))
                 .build()
         );
+
+        while (lift.isBusy()) {
+            sleep(10);
+        }
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift.setPower(0);
 
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
@@ -81,7 +97,7 @@ public final class RedBasket extends LinearOpMode {
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         while (lift.isBusy()) {
 //            lift.set(0.75);
-            lift.setPower(-0.75);
+            lift.setPower(-1);
             telemetry.addData("lift pos", lift.getCurrentPosition());
             telemetry.update();
         }
