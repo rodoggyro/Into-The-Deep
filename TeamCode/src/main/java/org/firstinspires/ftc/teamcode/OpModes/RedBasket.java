@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 
-@Autonomous (name = "Red Bucket Testing")
+@Autonomous (name = "Red Bucket w/ Specimen")
 public final class RedBasket extends LinearOpMode {
     BNO055IMU imu;
 
