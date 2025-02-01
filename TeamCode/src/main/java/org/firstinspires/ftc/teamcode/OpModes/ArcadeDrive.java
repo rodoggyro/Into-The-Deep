@@ -47,6 +47,8 @@ public class ArcadeDrive extends LinearOpMode {
 
     Servo pivotServo;
 
+    int target = 0;
+
     boolean pivotDown = false;
     boolean previousPivotState = false;
     boolean pivotDebounceComplete = true;
@@ -84,8 +86,8 @@ public class ArcadeDrive extends LinearOpMode {
 
         lift = hardwareMap.dcMotor.get("arm");
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         pivotServo = hardwareMap.servo.get("pivotServo");
 
@@ -137,8 +139,8 @@ public class ArcadeDrive extends LinearOpMode {
 
             if (gamepad2.left_trigger > 0.1){
                 lift.setPower(gamepad2.left_trigger);
-            } else if (gamepad2.right_trigger > 0.1){
-                lift.setPower(-gamepad2.right_trigger);
+            } else if (0.5 * gamepad2.right_trigger > 0.1){
+                lift.setPower(-0.5 * gamepad2.right_trigger);
             } else {
                 lift.setPower(0);
             }
