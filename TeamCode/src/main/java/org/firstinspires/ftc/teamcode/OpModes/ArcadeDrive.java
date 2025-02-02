@@ -43,6 +43,7 @@ public class ArcadeDrive extends LinearOpMode {
     Servo pivotServo;
 
     int target = 0;
+    boolean liftHoldPos = false;
 
     boolean previousPivotState = false;
     boolean pivotDebounceComplete = true;
@@ -129,34 +130,27 @@ public class ArcadeDrive extends LinearOpMode {
                 ));
             }
 
-            if (gamepad2.left_trigger > 0.1){
-                lift.setPower(gamepad2.left_trigger);
-            } else if (0.5 * gamepad2.right_trigger > 0.1){
-                lift.setPower(-0.5 * gamepad2.right_trigger);
-            } else {
-                lift.setPower(0);
+            if (gamepad2.right_bumper) {
+                liftHoldPos = true;
+                target = lift.getCurrentPosition();
+            } else if (gamepad2.left_bumper) {
+                liftHoldPos = false;
+                lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             }
 
-//            if ((lift.getCurrentPosition() > -2589)){
-//                if (gamepad2.left_trigger > 0.1){
-//                    lift.setPower(gamepad2.left_trigger);
-//                } else if (gamepad2.right_trigger > 0.1){
-//                    lift.setPower(-gamepad2.right_trigger);
-//                } else {
-//                    lift.setPower(0);
-//                }
-//            } else if (lift.getCurrentPosition() <= -2589) {
-//                if (gamepad2.left_trigger > 0.1){
-//                    lift.setPower(gamepad2.left_trigger);
-//                } else {
-//                    lift.setPower(0);
-//                }
-//            }
-//
-//            if (gamepad2.back){
-//                lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//                lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//            }
+            if (liftHoldPos) {
+                lift.setTargetPosition(target);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(0.25);
+            } else {
+                if (gamepad2.left_trigger > 0.1){
+                    lift.setPower(gamepad2.left_trigger);
+                } else if (0.5 * gamepad2.right_trigger > 0.1){
+                    lift.setPower(-0.5 * gamepad2.right_trigger);
+                } else {
+                    lift.setPower(0);
+                }
+            }
 
             if (gamepad2.b && !previousButtonState && clawDebounceComplete) {
                 clawOpen = !clawOpen;
