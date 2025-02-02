@@ -16,9 +16,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.Drawing;
 import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 
@@ -31,7 +28,6 @@ public class ArcadeDrive extends LinearOpMode {
 
     final long debounceDelay = 200;
 
-    DcMotor winch;
     DcMotor lift;
 
     Servo hanging;
@@ -42,14 +38,12 @@ public class ArcadeDrive extends LinearOpMode {
     boolean clawDebounceComplete = true;
     long clawDebounceStartTime = 0;
 
-    long pivotWait = 0;
     int pivotState = 0;
 
     Servo pivotServo;
 
     int target = 0;
 
-    boolean pivotDown = false;
     boolean previousPivotState = false;
     boolean pivotDebounceComplete = true;
     long pivotDebounceStartTime = 0;
@@ -93,8 +87,6 @@ public class ArcadeDrive extends LinearOpMode {
 
         //Hanging
         hanging = hardwareMap.servo.get("hanging");
-
-        winch = hardwareMap.dcMotor.get("winch");
 
         //Servos
         claw = hardwareMap.servo.get("claw");
@@ -199,14 +191,6 @@ public class ArcadeDrive extends LinearOpMode {
                     hanging.setPosition(0.75);
                 } else if (gamepad2.dpad_right) {
                     hanging.setPosition(0);
-                }
-
-                if (gamepad1.a) {
-                    winch.setPower(-1);
-                } else if (gamepad2.x) {
-                    winch.setPower(1);
-                } else {
-                    winch.setPower(0);
                 }
             }
 
