@@ -61,7 +61,7 @@ public final class BlueBasket extends LinearOpMode {
         lift.setPower(-0.75);
 
         Actions.runBlocking(drive.actionBuilder(beginPose)
-                .splineTo(new Vector2d(9.75, 38), Math.toRadians(-90))
+                .splineTo(new Vector2d(9.75, 35), Math.toRadians(-90))
                 .build()
         );
 
@@ -72,6 +72,8 @@ public final class BlueBasket extends LinearOpMode {
         lift.setPower(0);
 
         pivot.setPosition(0.15);
+
+        sleep(250);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(9.75, 32, Math.toRadians(-90)))
                 .strafeTo(new Vector2d(9.75, 40))
@@ -88,7 +90,7 @@ public final class BlueBasket extends LinearOpMode {
         //TODO: add specimen placing
         Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(9.75, 28), Math.toRadians(-90)))
                 .strafeTo(new Vector2d(20, 45))
-                .strafeTo(new Vector2d(46, 38))
+                .strafeTo(new Vector2d(50, 36))
                 .build()
         );
 
@@ -120,7 +122,7 @@ public final class BlueBasket extends LinearOpMode {
         }
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(46, 38), Math.toRadians(-90)))
-                .strafeToSplineHeading(new Vector2d(57, 55), Math.toRadians(45))
+                .strafeToSplineHeading(new Vector2d(60, 53), Math.toRadians(45))
                 .build()
         );
 
@@ -133,7 +135,7 @@ public final class BlueBasket extends LinearOpMode {
         lift.setPower(1);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(54, 53, Math.toRadians(45)))
-                .strafeToSplineHeading(new Vector2d(56, 38), Math.toRadians(-90))
+                .strafeToSplineHeading(new Vector2d(60, 38), Math.toRadians(-90))
                 .build()
         );
 
@@ -158,7 +160,7 @@ public final class BlueBasket extends LinearOpMode {
         }
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(46, 38), Math.toRadians(-90)))
-                .strafeToSplineHeading(new Vector2d(57, 55), Math.toRadians(45))
+                .strafeToSplineHeading(new Vector2d(60, 53), Math.toRadians(45))
                 .build()
         );
 

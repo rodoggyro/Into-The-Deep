@@ -88,7 +88,7 @@ public final class RedBasket extends LinearOpMode {
         //TODO: add specimen placing
         Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-9.75, -28), Math.toRadians(90)))
                 .strafeTo(new Vector2d(-20, -45))
-                .strafeTo(new Vector2d(-43, -34))
+                .strafeTo(new Vector2d(-50, -36))
     //                        .strafeToSplineHeading(new Vector2d(-57.4, -55), Math.toRadians(225))
     //                        .strafeToSplineHeading(new Vector2d(-55, -35), Math.toRadians(90))
                 .build()
@@ -122,7 +122,7 @@ public final class RedBasket extends LinearOpMode {
         }
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-45, -35), Math.toRadians(90)))
-                .strafeToSplineHeading(new Vector2d(-52, -50), Math.toRadians(225))
+                .strafeToSplineHeading(new Vector2d(-58, -52), Math.toRadians(225))
                 .build()
         );
 
@@ -135,7 +135,7 @@ public final class RedBasket extends LinearOpMode {
         lift.setPower(1);
 //
         Actions.runBlocking(drive.actionBuilder(new Pose2d(-52, -50, Math.toRadians(225)))
-                .strafeToSplineHeading(new Vector2d(-54, -35), Math.toRadians(90))
+                .strafeToSplineHeading(new Vector2d(-60, -38), Math.toRadians(90))
                 .build()
         );
 
@@ -160,7 +160,7 @@ public final class RedBasket extends LinearOpMode {
         }
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-54, -35), Math.toRadians(90)))
-                .strafeToSplineHeading(new Vector2d(-52, -50), Math.toRadians(225))
+                .strafeToSplineHeading(new Vector2d(-60, -52), Math.toRadians(225))
                 .build()
         );
 
