@@ -6,23 +6,16 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Vector2d;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Drawing;
-import org.firstinspires.ftc.teamcode.MecanumDrive;
-import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
-import org.firstinspires.ftc.teamcode.TankDrive;
-@Disabled
+import org.firstinspires.ftc.teamcode.*;
+
 public class LocalizationTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        SparkFunOTOSDrive drive = new SparkFunOTOSDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(180)));
-
-        telemetry.addData("linear Scalar", drive.linearScalarWorks);
-        telemetry.update();
+        PinpointDrive drive = new PinpointDrive(hardwareMap, new Pose2d(0, 0, 0));
 
         waitForStart();
 
