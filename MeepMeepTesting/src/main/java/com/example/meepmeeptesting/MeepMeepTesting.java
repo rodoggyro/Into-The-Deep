@@ -64,42 +64,24 @@ public class MeepMeepTesting {
                 //claw close
                 //lift up to low chamber
                 .splineToConstantHeading(new Vector2d(8, -33), Math.toRadians(90))
-                //pivot down
-                .lineToY(-40)
-                //claw open
-                //lift down to ground
-                .strafeTo(new Vector2d(48, -40))
-                //claw close
-                //pivot up half
-                .splineTo(new Vector2d(55, -55), Math.toRadians(180))
-                //claw open
-                .strafeTo(new Vector2d(55, -45))
-                //pivot down
-                .waitSeconds(1.5)
-                .strafeTo(new Vector2d(55, -55))
-                //claw close
-                //pivot up
-                .strafeTo(new Vector2d(9, -37))
-                //lift up
-                .turnTo(Math.toRadians(90))
-                //pivot down
-                .strafeTo(new Vector2d(9, -33))
-                .strafeTo(new Vector2d(9, -40))
-                //claw open
-                //lift down
-                //pivot half
-                .strafeToSplineHeading(new Vector2d(55, -45), Math.toRadians(270))
-                //pivot down
-                .strafeTo(new Vector2d(55, -55))
-                //claw close
-                //pivot up
-                .strafeTo(new Vector2d(10, -37))
-                //lift up
-                .turnTo(Math.toRadians(90))
-                //pivot down
-                .strafeTo(new Vector2d(10, -33))
-                .strafeTo(new Vector2d(10, -40))
-                .strafeTo(new Vector2d(55, -55))
+                .strafeTo(new Vector2d(8, -40))
+                .strafeTo(new Vector2d(36, -37))
+                .strafeTo(new Vector2d(36, -10))
+                .strafeTo(new Vector2d(47.2, -15))
+                .strafeTo(new Vector2d(47.2, -60))
+                .strafeTo(new Vector2d(47.2, -10))
+                .strafeTo(new Vector2d(57.5, -15))
+                .strafeTo(new Vector2d(57.5, -60))
+                .strafeToSplineHeading(new Vector2d(57.5, -47), Math.toRadians(270))
+                .strafeTo(new Vector2d(57.5, -60))
+                .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
+                .strafeTo(new Vector2d(8, -40))
+                .strafeToSplineHeading(new Vector2d(57.5, -60), Math.toRadians(270))
+                .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
+                .strafeTo(new Vector2d(8, -40))
+                .strafeToSplineHeading(new Vector2d(57.5, -60), Math.toRadians(270))
+                .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
+                .strafeTo(new Vector2d(8, -40))
                 .build());
 
         RoadRunnerBotEntity blueBucket = new DefaultBotBuilder(meepMeep)
