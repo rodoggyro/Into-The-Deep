@@ -62,9 +62,6 @@ public class ArcadeDrive extends LinearOpMode {
 
         SparkFunOTOSDrive drive = new SparkFunOTOSDrive(hardwareMap, new Pose2d(0, -0, Math.toRadians(0)));
 
-        telemetry.addData("linear Scalar", drive.linearScalarWorks);
-        telemetry.update();
-
         // Set up the parameters with which we will use our IMU. Note that integration
         // algorithm here just reports accelerations to the logcat log; it doesn't actually
         // provide positional information.
