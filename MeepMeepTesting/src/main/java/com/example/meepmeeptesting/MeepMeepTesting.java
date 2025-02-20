@@ -57,7 +57,7 @@ public class MeepMeepTesting {
 
         RoadRunnerBotEntity redObservation = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
+                .setConstraints(90, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .build();
 
         redObservation.runAction(redObservation.getDrive().actionBuilder(new Pose2d(20, -60, Math.toRadians(90)))
@@ -74,12 +74,16 @@ public class MeepMeepTesting {
                 .strafeTo(new Vector2d(57.5, -60))
                 .strafeToSplineHeading(new Vector2d(57.5, -47), Math.toRadians(270))
                 .strafeTo(new Vector2d(57.5, -60))
+
                 .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
                 .strafeTo(new Vector2d(8, -40))
-                .strafeToSplineHeading(new Vector2d(57.5, -60), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(57.5, -60, Math.toRadians(270)), Math.toRadians(0))
+
+
                 .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
                 .strafeTo(new Vector2d(8, -40))
-                .strafeToSplineHeading(new Vector2d(57.5, -60), Math.toRadians(270))
+                .splineTo(new Vector2d(57.5, -60), Math.toRadians(270))
+
                 .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
                 .strafeTo(new Vector2d(8, -40))
                 .build());
