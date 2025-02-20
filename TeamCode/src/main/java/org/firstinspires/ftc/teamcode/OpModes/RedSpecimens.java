@@ -20,7 +20,11 @@ import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 
 public final class RedSpecimens extends LinearOpMode {
 
-    int wallPosition = -55;
+    int wallPosition = -50;
+    int liftPosition = -450;
+    int chamberPosition = -32;
+
+    double pivotPickup = 0.30;
 
     Servo claw;
     DcMotor lift;
@@ -45,20 +49,21 @@ public final class RedSpecimens extends LinearOpMode {
 
         waitForStart();
 
-        lift.setTargetPosition(-575);
+        lift.setTargetPosition(liftPosition);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(-0.75);
         Actions.runBlocking(drive.actionBuilder(beginPose)
-                .splineToConstantHeading(new Vector2d(0, -33), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(0, -35), Math.toRadians(90))
                 .build());
 
-        pivot.setPosition(0.33);
+        pivot.setPosition(0.5);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(0, -33, Math.toRadians(90)))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(0, -35, Math.toRadians(90)))
                 .strafeTo(new Vector2d(0, -40))
                 .build());
 
         claw.setPosition(0);
+        pivot.setPosition(pivotPickup);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(0, -40, Math.toRadians(90)))
                 .strafeTo(new Vector2d(36, -37))
@@ -73,37 +78,40 @@ public final class RedSpecimens extends LinearOpMode {
                 .strafeTo(new Vector2d(36, -37))
                 .strafeTo(new Vector2d(36, -10))
                 .strafeTo(new Vector2d(47.2, -15))
-                .strafeTo(new Vector2d(47.2, wallPosition))
+                .strafeTo(new Vector2d(47.2, -55))
                 .strafeTo(new Vector2d(47.2, -10))
                 .strafeTo(new Vector2d(57.5, -15))
-                .strafeTo(new Vector2d(57.5, wallPosition))
+                .strafeTo(new Vector2d(57.5, -55))
                 .strafeToSplineHeading(new Vector2d(57.5, -47), Math.toRadians(270))
                 .build());
 
-        pivot.setPosition(0.33);
+        pivot.setPosition(pivotPickup);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(57.5, -47, Math.toRadians(270)))
                 .strafeTo(new Vector2d(57.5, wallPosition))
                 .build());
 
         claw.setPosition(0.3);
-        sleep(150);
+        sleep(250);
         pivot.setPosition(0.027);
 
-        lift.setTargetPosition(-575);
+        sleep(500);
+
+        lift.setTargetPosition(liftPosition);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(-0.75);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(57.5, wallPosition, Math.toRadians(270)))
-                .strafeToSplineHeading(new Vector2d(4, -33), Math.toRadians(90))
+                .strafeToSplineHeading(new Vector2d(4, -35), Math.toRadians(90))
                 .build());
 
-        pivot.setPosition(0.33);
+        pivot.setPosition(0.5);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(4, -33, Math.toRadians(90)))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(4, -35, Math.toRadians(90)))
                 .strafeTo(new Vector2d(4, -40))
                 .build());
 
+        pivot.setPosition(pivotPickup);
         claw.setPosition(0);
         sleep(150);
         lift.setTargetPosition(0);
@@ -111,17 +119,26 @@ public final class RedSpecimens extends LinearOpMode {
         lift.setPower(0.75);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(4, -40, Math.toRadians(90)))
+                .strafeTo(new Vector2d(57.5, wallPosition+10))
                 .strafeToSplineHeading(new Vector2d(57.5, wallPosition), Math.toRadians(270))
                 .build());
 
+        pivot.setPosition(pivotPickup);
+
         claw.setPosition(0.3);
-        sleep(150);
-        lift.setTargetPosition(-575);
+        sleep(500);
+        lift.setTargetPosition(liftPosition);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(-0.75);
+        pivot.setPosition(0.027);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(57.5, wallPosition, Math.toRadians(270)))
-                .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
+                .strafeTo(new Vector2d(57.5, wallPosition+10))
+                .strafeToSplineHeading(new Vector2d(8, chamberPosition), Math.toRadians(90))
+                .build());
+
+        pivot.setPosition(0.5);
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(8, chamberPosition, Math.toRadians(90)))
                 .strafeTo(new Vector2d(8, -40))
                 .build());
 
@@ -130,9 +147,12 @@ public final class RedSpecimens extends LinearOpMode {
         lift.setTargetPosition(0);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(0.75);
+        pivot.setPosition(0.027);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(8, -40, Math.toRadians(90)))
-                .strafeToSplineHeading(new Vector2d(57.5, wallPosition), Math.toRadians(270))
+                .strafeTo(new Vector2d(50,-40))
+                .strafeTo(new Vector2d(64, -9.25))
+                .strafeTo(new Vector2d(64, wallPosition))
                 .build());
 
         /*Actions.runBlocking(drive.actionBuilder(beginPose)
