@@ -228,7 +228,7 @@ public class ArcadeDrive extends LinearOpMode {
                     pivotServo.setPosition(0.33);
                     break;
                 case 2:
-                    pivotServo.setPosition(0.55);
+                    pivotServo.setPosition(0.65);
                     break;
             }
 
