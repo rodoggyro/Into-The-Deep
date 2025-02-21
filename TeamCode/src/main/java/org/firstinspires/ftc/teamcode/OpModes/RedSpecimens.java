@@ -10,9 +10,11 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.PinpointDrive;
 import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 
@@ -30,9 +32,12 @@ public final class RedSpecimens extends LinearOpMode {
     DcMotor lift;
     Servo pivot;
 
+    DistanceSensor rightSensor;
+
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(9.5, -60, Math.toRadians(90));
+        Pose2d beginPose = new Pose2d(72 - rightSensor.getDistance(DistanceUnit.INCH), -60, Math.toRadians(90));
+//        Pose2d beginPose = new Pose2d(9.5, -60, Math.toRadians(90));
         Pose2d currentPose = beginPose;
         PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
 
@@ -95,7 +100,7 @@ public final class RedSpecimens extends LinearOpMode {
         sleep(250);
         pivot.setPosition(0.027);
 
-        sleep(500);
+        sleep(750);
 
         lift.setTargetPosition(liftPosition);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
