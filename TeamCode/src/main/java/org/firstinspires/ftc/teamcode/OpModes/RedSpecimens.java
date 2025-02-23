@@ -28,14 +28,20 @@ public final class RedSpecimens extends LinearOpMode {
 
     double pivotPickup = 0.30;
 
+    boolean continuePath = false;
+
     Servo claw;
     DcMotor lift;
     Servo pivot;
 
     DistanceSensor rightSensor;
+    DistanceSensor forwardSensor;
 
     @Override
     public void runOpMode() throws InterruptedException {
+        rightSensor = hardwareMap.get(DistanceSensor.class, "rightSensor");
+        forwardSensor = hardwareMap.get(DistanceSensor.class, "forwardSensor");
+
         Pose2d beginPose = new Pose2d(72 - rightSensor.getDistance(DistanceUnit.INCH), -60, Math.toRadians(90));
 //        Pose2d beginPose = new Pose2d(9.5, -60, Math.toRadians(90));
         Pose2d currentPose = beginPose;
