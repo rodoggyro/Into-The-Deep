@@ -106,7 +106,6 @@ public final class RedSpecimens extends LinearOpMode {
         sleep(250);
         pivot.setPosition(0.027);
 
-        sleep(750);
         sleep(400);
 
         lift.setTargetPosition(liftPosition);
