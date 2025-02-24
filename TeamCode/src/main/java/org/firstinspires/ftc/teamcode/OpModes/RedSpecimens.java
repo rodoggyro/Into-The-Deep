@@ -64,19 +64,19 @@ public final class RedSpecimens extends LinearOpMode {
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(-0.75);
         Actions.runBlocking(drive.actionBuilder(beginPose)
-                .splineToConstantHeading(new Vector2d(0, -35), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(8, -35), Math.toRadians(90))
                 .build());
 
         pivot.setPosition(0.5);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(0, -35, Math.toRadians(90)))
-                .strafeTo(new Vector2d(0, -40))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(8, -35, Math.toRadians(90)))
+                .strafeTo(new Vector2d(8, -40))
                 .build());
 
         claw.setPosition(0);
         pivot.setPosition(pivotPickup);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(0, -40, Math.toRadians(90)))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(8, -40, Math.toRadians(90)))
                 .strafeTo(new Vector2d(36, -37))
                 .build());
 
@@ -107,29 +107,30 @@ public final class RedSpecimens extends LinearOpMode {
         pivot.setPosition(0.027);
 
         sleep(750);
+        sleep(400);
 
         lift.setTargetPosition(liftPosition);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(-0.75);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(57.5, wallPosition, Math.toRadians(270)))
-                .strafeToSplineHeading(new Vector2d(4, -35), Math.toRadians(90))
+                .strafeToSplineHeading(new Vector2d(10, -35), Math.toRadians(90))
                 .build());
 
         pivot.setPosition(0.5);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(4, -35, Math.toRadians(90)))
-                .strafeTo(new Vector2d(4, -40))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(10, -35, Math.toRadians(90)))
+                .strafeTo(new Vector2d(10, -40))
                 .build());
 
         pivot.setPosition(pivotPickup);
         claw.setPosition(0);
-        sleep(150);
+        sleep(125);
         lift.setTargetPosition(0);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(0.75);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(4, -40, Math.toRadians(90)))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(10, -40, Math.toRadians(90)))
                 .strafeTo(new Vector2d(57.5, wallPosition+10))
                 .strafeToSplineHeading(new Vector2d(57.5, wallPosition), Math.toRadians(270))
                 .build());
@@ -145,12 +146,12 @@ public final class RedSpecimens extends LinearOpMode {
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(57.5, wallPosition, Math.toRadians(270)))
                 .strafeTo(new Vector2d(57.5, wallPosition+10))
-                .strafeToSplineHeading(new Vector2d(8, chamberPosition), Math.toRadians(90))
+                .strafeToSplineHeading(new Vector2d(12, chamberPosition), Math.toRadians(90))
                 .build());
 
         pivot.setPosition(0.5);
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(8, chamberPosition, Math.toRadians(90)))
-                .strafeTo(new Vector2d(8, -40))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(12, chamberPosition, Math.toRadians(90)))
+                .strafeTo(new Vector2d(12, -40))
                 .build());
 
         claw.setPosition(0);
@@ -160,18 +161,10 @@ public final class RedSpecimens extends LinearOpMode {
         lift.setPower(0.75);
         pivot.setPosition(0.027);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(8, -40, Math.toRadians(90)))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(12, -40, Math.toRadians(90)))
                 .strafeTo(new Vector2d(50,-40))
                 .strafeTo(new Vector2d(64, -9.25))
                 .strafeTo(new Vector2d(64, wallPosition))
                 .build());
-
-        /*Actions.runBlocking(drive.actionBuilder(beginPose)
-                .strafeToSplineHeading(new Vector2d(57.5, wallPosition), Math.toRadians(270))
-                .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
-                .strafeTo(new Vector2d(8, -40))
-                .build());
-
-         */
     }
 }

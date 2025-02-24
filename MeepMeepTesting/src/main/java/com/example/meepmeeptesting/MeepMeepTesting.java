@@ -65,8 +65,8 @@ public class MeepMeepTesting {
                 //lift up to low chamber
                 .splineToConstantHeading(new Vector2d(8, -33), Math.toRadians(90))
                 .strafeTo(new Vector2d(8, -40))
-                .strafeTo(new Vector2d(36, -37))
-                .strafeTo(new Vector2d(36, -10))
+                .splineTo(new Vector2d(36, -37), Math.toRadians(90))
+                .splineTo(new Vector2d(36, -10), Math.toRadians(90))
                 .strafeTo(new Vector2d(47.2, -15))
                 .strafeTo(new Vector2d(47.2, -60))
                 .strafeTo(new Vector2d(47.2, -10))
