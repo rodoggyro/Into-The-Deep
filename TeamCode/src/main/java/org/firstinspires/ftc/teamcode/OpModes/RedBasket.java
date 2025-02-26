@@ -7,20 +7,25 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.PinpointDrive;
 import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 
 @Autonomous (name = "Red Bucket w/ Specimen")
+
 public final class RedBasket extends LinearOpMode {
     BNO055IMU imu;
 
     Servo claw;
     DcMotor lift;
     Servo pivot;
+
+    int liftPosition = -450;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -32,9 +37,9 @@ public final class RedBasket extends LinearOpMode {
         parameters.loggingTag          = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
-        Pose2d beginPose = new Pose2d(-9.75, -62, Math.toRadians(90));
+        Pose2d beginPose = new Pose2d(-9.5, -62, Math.toRadians(90));
         Pose2d currentPose = beginPose;
-        SparkFunOTOSDrive drive = new SparkFunOTOSDrive(hardwareMap, beginPose);
+        PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
 
         claw = hardwareMap.get(Servo.class, "claw");
 //        lift = new Motor(hardwareMap, "arm", 28*20, (double) 6000 /20);
@@ -56,29 +61,22 @@ public final class RedBasket extends LinearOpMode {
 
         waitForStart();
 
-        lift.setTargetPosition(-575);
+        lift.setTargetPosition(liftPosition);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(-0.75);
-
         Actions.runBlocking(drive.actionBuilder(beginPose)
-                .splineTo(new Vector2d(-9.75, -35), Math.toRadians(90))
-                .build()
-        );
+                .splineToConstantHeading(new Vector2d(-8, -35), Math.toRadians(90))
+                .build());
 
-        while (lift.isBusy()) {
-            sleep(10);
-        }
-        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lift.setPower(0);
+        pivot.setPosition(0.5);
 
-        pivot.setPosition(0.15);
-
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(-9.75, -32, Math.toRadians(90)))
-                .strafeTo(new Vector2d(-9.75, -38))
-                .build()
-        );
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(-8, -35, Math.toRadians(90)))
+                .strafeTo(new Vector2d(-8, -40))
+                .build());
 
         claw.setPosition(0);
+
+        pivot.setPosition(0.027);
 
         lift.setTargetPosition(0);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -86,109 +84,84 @@ public final class RedBasket extends LinearOpMode {
         sleep(500);
 
         //TODO: add specimen placing
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-9.75, -28), Math.toRadians(90)))
-                .strafeTo(new Vector2d(-20, -45))
-                .strafeTo(new Vector2d(-43, -34))
-    //                        .strafeToSplineHeading(new Vector2d(-57.4, -55), Math.toRadians(225))
-    //                        .strafeToSplineHeading(new Vector2d(-55, -35), Math.toRadians(90))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-8, -40), Math.toRadians(90)))
+                .strafeTo(new Vector2d(-24, -40))
                 .build()
         );
 
-        while (lift.isBusy()) {
-            sleep(10);
-        }
-        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lift.setPower(0);
+        pivot.setPosition(0.35);
 
-        ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(-8, -40, Math.toRadians(90)))
+                .strafeTo(new Vector2d(-45, -43))
+                .build());
 
-        pivot.setPosition(0.25);
-        sleep(500);
-
-        pivot.setPosition(0.53);
-        sleep(750);
-        claw.setPosition(0.3);
-        sleep(500);
-        pivot.setPosition(0.027);
-
-        lift.setTargetPosition(-2750 / 5);
-        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        while (lift.isBusy()) {
-//            lift.set(0.75);
-            lift.setPower(-1);
-            telemetry.addData("lift pos", lift.getCurrentPosition());
-            telemetry.update();
-        }
-
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-45, -35), Math.toRadians(90)))
-                .strafeToSplineHeading(new Vector2d(-52, -50), Math.toRadians(225))
-                .build()
-        );
-
-        claw.setPosition(0);
+        pivot.setPosition(0.6);
 
         sleep(250);
 
-        lift.setTargetPosition(0);
-        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lift.setPower(1);
-//
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(-52, -50, Math.toRadians(225)))
-                .strafeToSplineHeading(new Vector2d(-54, -35), Math.toRadians(90))
-                .build()
-        );
-
-        while (lift.isBusy()) {
-            sleep(10);
-        }
-
-        pivot.setPosition(0.45);
-        sleep(500);
-
-        pivot.setPosition(0.53);
-        sleep(750);
         claw.setPosition(0.3);
-        sleep(500);
+
+        sleep(250);
+
         pivot.setPosition(0.027);
 
-        lift.setTargetPosition(-2750 / 5);
+        lift.setTargetPosition(liftPosition-50);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (lift.isBusy()) {
-            lift.setPower(-1);
-            sleep(10);
-        }
+        lift.setPower(-1);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-54, -35), Math.toRadians(90)))
-                .strafeToSplineHeading(new Vector2d(-52, -50), Math.toRadians(225))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-45, -43), Math.toRadians(90)))
+                .strafeToSplineHeading(new Vector2d(-54, -54), Math.toRadians(225))
                 .build()
         );
-
-        claw.setPosition(0);
-        sleep(500);
-
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-52, -50), Math.toRadians(225)))
-                .strafeToSplineHeading(new Vector2d(-48, 0), Math.toRadians(0))
-                .strafeTo(new Vector2d(-0, 0))
-                .build()
-        );
-
-        pivot.setPosition(0.25);
-        sleep(500);
 //
 //        claw.setPosition(0);
+//
 //        sleep(250);
+//
 //        lift.setTargetPosition(0);
 //        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //        lift.setPower(1);
-//
-//        Actions.runBlocking(drive.actionBuilder(new Pose2d(-57.4, -55, Math.toRadians(225)))
-//                .splineTo(new Vector2d(-55, -24), Math.toRadians(180))
+////
+//        Actions.runBlocking(drive.actionBuilder(new Pose2d(-52, -50, Math.toRadians(225)))
+//                .strafeToSplineHeading(new Vector2d(-54, -35), Math.toRadians(90))
 //                .build()
 //        );
 //
-//        while(lift.isBusy()) {
+//        while (lift.isBusy()) {
 //            sleep(10);
 //        }
+//
+//        pivot.setPosition(0.45);
+//        sleep(500);
+//
+//        pivot.setPosition(0.53);
+//        sleep(750);
+//        claw.setPosition(0.3);
+//        sleep(500);
+//        pivot.setPosition(0.027);
+//
+//        lift.setTargetPosition(-2750 / 5);
+//        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        while (lift.isBusy()) {
+//            lift.setPower(-1);
+//            sleep(10);
+//        }
+//
+//        Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-54, -35), Math.toRadians(90)))
+//                .strafeToSplineHeading(new Vector2d(-52, -50), Math.toRadians(225))
+//                .build()
+//        );
+//
+//        claw.setPosition(0);
+//        sleep(500);
+//
+//        Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-52, -50), Math.toRadians(225)))
+//                .strafeToSplineHeading(new Vector2d(-48, 0), Math.toRadians(0))
+//                .strafeTo(new Vector2d(-0, 0))
+//                .build()
+//        );
+//
+//        pivot.setPosition(0.25);
+//        sleep(500);
     }
 }
