@@ -18,9 +18,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.PinpointDrive;
 import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 
-@Autonomous (name = "Red Observation Zone")
+@Autonomous (name = "Blue Observation Zone")
 
-public final class RedSpecimens extends LinearOpMode {
+public final class BlueSpecimens extends LinearOpMode {
 
     int wallPosition = -50;
     int liftPosition = -450;
@@ -113,12 +113,13 @@ public final class RedSpecimens extends LinearOpMode {
         lift.setPower(-0.75);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(57.5, wallPosition, Math.toRadians(270)))
-                .strafeToSplineHeading(new Vector2d(10, -35), Math.toRadians(90))
+                .strafeTo(new Vector2d(57.5, wallPosition+10))
+                .strafeToSplineHeading(new Vector2d(10, chamberPosition - 5), Math.toRadians(90))
                 .build());
 
         pivot.setPosition(0.5);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(10, -35, Math.toRadians(90)))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(10, chamberPosition-5, Math.toRadians(90)))
                 .strafeTo(new Vector2d(10, -40))
                 .build());
 
@@ -130,8 +131,8 @@ public final class RedSpecimens extends LinearOpMode {
         lift.setPower(0.75);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(10, -40, Math.toRadians(90)))
-                .strafeTo(new Vector2d(57.5, wallPosition+10))
-                .strafeToSplineHeading(new Vector2d(57.5, wallPosition), Math.toRadians(270))
+                .strafeTo(new Vector2d(40, wallPosition+10))
+                .strafeToSplineHeading(new Vector2d(40, wallPosition), Math.toRadians(270))
                 .build());
 
         pivot.setPosition(pivotPickup);
@@ -143,13 +144,13 @@ public final class RedSpecimens extends LinearOpMode {
         lift.setPower(-0.75);
         pivot.setPosition(0.027);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(57.5, wallPosition, Math.toRadians(270)))
-                .strafeTo(new Vector2d(57.5, wallPosition+10))
-                .strafeToSplineHeading(new Vector2d(12, chamberPosition), Math.toRadians(90))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(40, wallPosition, Math.toRadians(270)))
+                .strafeTo(new Vector2d(40, wallPosition+10))
+                .strafeToSplineHeading(new Vector2d(12, chamberPosition-3), Math.toRadians(90))
                 .build());
 
         pivot.setPosition(0.5);
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(12, chamberPosition, Math.toRadians(90)))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(12, chamberPosition-3, Math.toRadians(90)))
                 .strafeTo(new Vector2d(12, -40))
                 .build());
 

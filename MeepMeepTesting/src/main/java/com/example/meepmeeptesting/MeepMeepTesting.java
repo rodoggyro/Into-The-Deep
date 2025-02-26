@@ -63,27 +63,23 @@ public class MeepMeepTesting {
         redObservation.runAction(redObservation.getDrive().actionBuilder(new Pose2d(20, -60, Math.toRadians(90)))
                 //claw close
                 //lift up to low chamber
-                .splineToConstantHeading(new Vector2d(8, -33), Math.toRadians(90))
-                .strafeTo(new Vector2d(8, -40))
-                .splineTo(new Vector2d(36, -37), Math.toRadians(90))
-                .splineTo(new Vector2d(36, -10), Math.toRadians(90))
-                .strafeTo(new Vector2d(47.2, -15))
-                .strafeTo(new Vector2d(47.2, -60))
-                .strafeTo(new Vector2d(47.2, -10))
-                .strafeTo(new Vector2d(57.5, -15))
-                .strafeTo(new Vector2d(57.5, -60))
-                .strafeToSplineHeading(new Vector2d(57.5, -47), Math.toRadians(270))
-                .strafeTo(new Vector2d(57.5, -60))
-
-                .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
-                .strafeTo(new Vector2d(8, -40))
+//                .splineToConstantHeading(new Vector2d(8, -33), Math.toRadians(90))
+//                .strafeTo(new Vector2d(8, -40))
+//                .splineTo(new Vector2d(36, -37), Math.toRadians(90))
+//                .splineTo(new Vector2d(36, -10), Math.toRadians(90))
+//                .splineTo(new Vector2d(47.2, -15), Math.toRadians(-90))
+//                .splineTo(new Vector2d(47.2, -60), Math.toRadians(-90))
+//                .splineTo(new Vector2d(47.2, -10), Math.toRadians(90))
+//                .splineTo(new Vector2d(57.5, -15), Math.toRadians(-90))
+//                .splineTo(new Vector2d(57.5, -60), Math.toRadians(-90))
+//                .strafeToSplineHeading(new Vector2d(57.5, -47), Math.toRadians(270))
+//                .strafeTo(new Vector2d(57.5, -60))
+//                .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
+//                .strafeTo(new Vector2d(8, -40))
+//                .splineToSplineHeading(new Pose2d(57.5, -60, Math.toRadians(270)), Math.toRadians(0))
+//                .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
+//                .strafeTo(new Vector2d(8, -40))
                 .splineToSplineHeading(new Pose2d(57.5, -60, Math.toRadians(270)), Math.toRadians(0))
-
-
-                .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
-                .strafeTo(new Vector2d(8, -40))
-                .splineTo(new Vector2d(57.5, -60), Math.toRadians(270))
-
                 .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
                 .strafeTo(new Vector2d(8, -40))
                 .build());
