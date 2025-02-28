@@ -40,7 +40,7 @@ public class ArcadeDrive extends LinearOpMode {
     Servo hanging;
     Servo claw;
 
-    boolean clawOpen = true;
+    boolean clawClose = true;
     boolean previousButtonState = false;
     boolean clawDebounceComplete = true;
     long clawDebounceStartTime = 0;
@@ -171,6 +171,18 @@ public class ArcadeDrive extends LinearOpMode {
                     break;
             }
 
+            if (gamepad1.a || gamepad2.right_bumper) {
+                liftState = 1;
+                pivotState = 1;
+                clawClose = true;
+            }
+
+            if (gamepad2.left_bumper) {
+                liftState = 4;
+                pivotState = 1;
+                clawClose = true;
+            }
+
             if (liftUp.wasJustPressed()) {
                 if(Math.abs(liftState) < 4){
                     liftState ++;
@@ -181,21 +193,11 @@ public class ArcadeDrive extends LinearOpMode {
                 }
             }
 
-//            power = Math.min(1.0, Math.max(0.2, Math.abs(target - arm.getCurrentPosition()) / 500.0));
             arm.setTargetPosition(target);
             arm.set(0.05);
 
-
-//            if (gamepad2.left_trigger > 0.1){
-//                lift.setPower(gamepad2.left_trigger);
-//            } else if (0.5 * gamepad2.right_trigger > 0.1){
-//                lift.setPower(-0.5 * gamepad2.right_trigger);
-//            } else {
-//                lift.setPower(0);
-//            }
-
             if (gamepad2.b && !previousButtonState && clawDebounceComplete) {
-                clawOpen = !clawOpen;
+                clawClose = !clawClose;
                 clawDebounceComplete = false;
                 clawDebounceStartTime = System.currentTimeMillis();
             }
@@ -206,7 +208,7 @@ public class ArcadeDrive extends LinearOpMode {
 
             previousButtonState = gamepad2.b;
 
-            if (clawOpen) {
+            if (clawClose) {
                 claw.setPosition(0.35);
             } else {
                 claw.setPosition(0);
