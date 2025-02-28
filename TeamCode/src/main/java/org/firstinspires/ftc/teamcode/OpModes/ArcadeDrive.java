@@ -7,6 +7,10 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Vector2d;
 
+import com.arcrobotics.ftclib.gamepad.ButtonReader;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -16,12 +20,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.Drawing;
 import org.firstinspires.ftc.teamcode.PinpointDrive;
-import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 
 
 @TeleOp
@@ -35,6 +35,8 @@ public class ArcadeDrive extends LinearOpMode {
     DcMotor winch;
     DcMotor lift;
 
+    Motor arm;
+
     Servo hanging;
     Servo claw;
 
@@ -43,23 +45,31 @@ public class ArcadeDrive extends LinearOpMode {
     boolean clawDebounceComplete = true;
     long clawDebounceStartTime = 0;
 
-    long pivotWait = 0;
-    int pivotState = 0;
-
     Servo pivotServo;
 
-    int target = 0;
 
-    boolean pivotDown = false;
+    int target = 0;
+    boolean liftHoldPos = false;
+    int liftState = 0;
+
+    int pivotState = 0;
     boolean previousPivotState = false;
     boolean pivotDebounceComplete = true;
     long pivotDebounceStartTime = 0;
 
+    ButtonReader liftUp;
+    ButtonReader liftDown;
+
     boolean endGame = false;
+
+    double power;
 
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
+        liftUp = new ButtonReader(new GamepadEx(gamepad2), GamepadKeys.Button.DPAD_UP);
+        liftDown = new ButtonReader(new GamepadEx(gamepad2), GamepadKeys.Button.DPAD_DOWN);
 
         PinpointDrive drive = new PinpointDrive(hardwareMap, new Pose2d(0, -0, Math.toRadians(0)));
 
@@ -82,10 +92,18 @@ public class ArcadeDrive extends LinearOpMode {
             imu.initialize(parameters);
         }
 
-        lift = hardwareMap.dcMotor.get("arm");
-        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        lift = hardwareMap.dcMotor.get("arm");
+//        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        arm = new Motor(hardwareMap, "arm", 28*4, 6000/4);
+//        arm.resetEncoder();
+        arm.setRunMode(Motor.RunMode.PositionControl);
+        arm.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        arm.setInverted(true);
+        arm.setPositionTolerance(10);
+        arm.setPositionCoefficient(0.2);
 
         pivotServo = hardwareMap.servo.get("pivotServo");
 
@@ -135,33 +153,45 @@ public class ArcadeDrive extends LinearOpMode {
                 ));
             }
 
-            if (gamepad2.left_trigger > 0.1){
-                lift.setPower(gamepad2.left_trigger);
-            } else if (0.5 * gamepad2.right_trigger > 0.1){
-                lift.setPower(-0.5 * gamepad2.right_trigger);
-            } else {
-                lift.setPower(0);
+            switch (Math.abs(liftState) % 5){
+                case 0:
+                    target = 78;
+                    break;
+                case 1:
+                    target = 154;
+                    break;
+                case 2:
+                    target = 332;
+                    break;
+                case 3:
+                    target = 581;
+                    break;
+                case 4:
+                    target = 778;
+                    break;
             }
 
-//            if ((lift.getCurrentPosition() > -2589)){
-//                if (gamepad2.left_trigger > 0.1){
-//                    lift.setPower(gamepad2.left_trigger);
-//                } else if (gamepad2.right_trigger > 0.1){
-//                    lift.setPower(-gamepad2.right_trigger);
-//                } else {
-//                    lift.setPower(0);
-//                }
-//            } else if (lift.getCurrentPosition() <= -2589) {
-//                if (gamepad2.left_trigger > 0.1){
-//                    lift.setPower(gamepad2.left_trigger);
-//                } else {
-//                    lift.setPower(0);
-//                }
-//            }
-//
-//            if (gamepad2.back){
-//                lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//                lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            if (liftUp.wasJustPressed()) {
+                if(Math.abs(liftState) < 4){
+                    liftState ++;
+                }
+            } else if (liftDown.wasJustPressed()) {
+                if (Math.abs(liftState) > 0){
+                    liftState --;
+                }
+            }
+
+//            power = Math.min(1.0, Math.max(0.2, Math.abs(target - arm.getCurrentPosition()) / 500.0));
+            arm.setTargetPosition(target);
+            arm.set(0.05);
+
+
+//            if (gamepad2.left_trigger > 0.1){
+//                lift.setPower(gamepad2.left_trigger);
+//            } else if (0.5 * gamepad2.right_trigger > 0.1){
+//                lift.setPower(-0.5 * gamepad2.right_trigger);
+//            } else {
+//                lift.setPower(0);
 //            }
 
             if (gamepad2.b && !previousButtonState && clawDebounceComplete) {
@@ -232,17 +262,18 @@ public class ArcadeDrive extends LinearOpMode {
                     break;
             }
 
-//            pivotServo.setPosition(gamepad2.left_stick_y);
+            liftUp.readValue();
+            liftDown.readValue();
 
             drive.updatePoseEstimate();
 
             telemetry.addData("x", drive.pose.position.x);
             telemetry.addData("y", drive.pose.position.y);
             telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
-            telemetry.addData("pivot Position", pivotServo.getPosition());
-            telemetry.addData("lift", lift.getCurrentPosition());
-            telemetry.addData("hanging", hanging.getPosition());
-//            telemetry.addData("Heading", imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle);
+            telemetry.addData("lift", arm.getCurrentPosition());
+            telemetry.addData("target", target);
+            telemetry.addData("At Target?", arm.atTargetPosition());
+            telemetry.addData("liftState", liftState);
             telemetry.update();
 
             TelemetryPacket packet = new TelemetryPacket();
@@ -252,3 +283,10 @@ public class ArcadeDrive extends LinearOpMode {
         }
     }
 }
+            /**
+             * High Chamber: -778
+             * Low Chamber: -332
+             * Low Basket: -581
+             * Pick Up Sub: -154
+             * Pick Up wall: -78
+ */
