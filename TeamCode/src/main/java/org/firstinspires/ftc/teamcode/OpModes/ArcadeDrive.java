@@ -167,7 +167,7 @@ public class ArcadeDrive extends LinearOpMode {
                     target = 581;
                     break;
                 case 4:
-                    target = 778;
+                    target = 790;
                     break;
             }
 
@@ -207,7 +207,7 @@ public class ArcadeDrive extends LinearOpMode {
             previousButtonState = gamepad2.b;
 
             if (clawOpen) {
-                claw.setPosition(0.3);
+                claw.setPosition(0.35);
             } else {
                 claw.setPosition(0);
             }
@@ -258,7 +258,7 @@ public class ArcadeDrive extends LinearOpMode {
                     pivotServo.setPosition(0.33);
                     break;
                 case 2:
-                    pivotServo.setPosition(0.65);
+                    pivotServo.setPosition(0.60);
                     break;
             }
 
