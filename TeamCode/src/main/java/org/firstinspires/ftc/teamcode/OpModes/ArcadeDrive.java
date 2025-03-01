@@ -33,7 +33,6 @@ public class ArcadeDrive extends LinearOpMode {
     final long debounceDelay = 200;
 
     DcMotor winch;
-    DcMotor lift;
 
     Motor arm;
 
@@ -73,32 +72,12 @@ public class ArcadeDrive extends LinearOpMode {
 
         PinpointDrive drive = new PinpointDrive(hardwareMap, PinpointDrive.savedPose);
 
-        // Set up the parameters with which we will use our IMU. Note that integration
-        // algorithm here just reports accelerations to the logcat log; it doesn't actually
-        // provide positional information.
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample OpMode
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
-        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-
-        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
-        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
-        // and named "imu".
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
-        if(!imu.isGyroCalibrated()){
-            imu.initialize(parameters);
-        }
-
 //        lift = hardwareMap.dcMotor.get("arm");
 //        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         arm = new Motor(hardwareMap, "arm", 28*4, 6000/4);
-//        arm.resetEncoder();
         arm.setRunMode(Motor.RunMode.PositionControl);
         arm.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         arm.setInverted(true);
