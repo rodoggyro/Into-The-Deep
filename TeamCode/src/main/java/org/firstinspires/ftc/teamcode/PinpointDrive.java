@@ -27,6 +27,7 @@ import org.firstinspires.ftc.teamcode.messages.PoseMessage;
  */
 @Config
 public class PinpointDrive extends MecanumDrive {
+    public static Pose2d savedPose = new Pose2d(0,0,0);
     public static class Params {
         /*
         Set this to the name that your Pinpoint is configured as in your hardware config.
@@ -83,6 +84,8 @@ public class PinpointDrive extends MecanumDrive {
         super(hardwareMap, pose);
         FlightRecorder.write("PINPOINT_PARAMS",PARAMS);
         pinpoint = hardwareMap.get(GoBildaPinpointDriverRR.class,PARAMS.pinpointDeviceName);
+
+        savedPose = pose;
 
         if (PARAMS.usePinpointIMUForTuning) {
             lazyImu = new LazyImu(hardwareMap, PARAMS.pinpointDeviceName, new RevHubOrientationOnRobot(zyxOrientation(0, 0, 0)));

@@ -161,5 +161,6 @@ public final class RedSpecimens extends LinearOpMode {
         lift.setPower(0.75);
         pivot.setPosition(0.027);
 
+        PinpointDrive.savedPose = drive.pinpoint.getPositionRR();
     }
 }

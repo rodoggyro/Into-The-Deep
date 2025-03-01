@@ -71,7 +71,7 @@ public class ArcadeDrive extends LinearOpMode {
         liftUp = new ButtonReader(new GamepadEx(gamepad2), GamepadKeys.Button.DPAD_UP);
         liftDown = new ButtonReader(new GamepadEx(gamepad2), GamepadKeys.Button.DPAD_DOWN);
 
-        PinpointDrive drive = new PinpointDrive(hardwareMap, new Pose2d(0, -0, Math.toRadians(0)));
+        PinpointDrive drive = new PinpointDrive(hardwareMap, PinpointDrive.savedPose);
 
         // Set up the parameters with which we will use our IMU. Note that integration
         // algorithm here just reports accelerations to the logcat log; it doesn't actually
