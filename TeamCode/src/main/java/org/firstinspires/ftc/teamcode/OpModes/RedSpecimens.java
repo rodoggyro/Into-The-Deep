@@ -77,7 +77,7 @@ public final class RedSpecimens extends LinearOpMode {
         pivot.setPosition(pivotPickup);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(8, -40, Math.toRadians(90)))
-                .strafeTo(new Vector2d(36, -37))
+                .splineTo(new Vector2d(36, -37), Math.toRadians(90))
                 .build());
 
         pivot.setPosition(0.027);
@@ -86,13 +86,12 @@ public final class RedSpecimens extends LinearOpMode {
         lift.setPower(0.75);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(36, -37, Math.toRadians(90)))
-                .strafeTo(new Vector2d(36, -37))
-                .strafeTo(new Vector2d(36, -10))
-                .strafeTo(new Vector2d(47.2, -15))
-                .strafeTo(new Vector2d(47.2, -55))
-                .strafeTo(new Vector2d(47.2, -10))
-                .strafeTo(new Vector2d(57.5, -15))
-                .strafeTo(new Vector2d(57.5, -55))
+                .splineTo(new Vector2d(36, -10), Math.toRadians(90))
+                .splineTo(new Vector2d(47.2, -15), Math.toRadians(-90))
+                .splineTo(new Vector2d(47.2, -60), Math.toRadians(-90))
+                .splineTo(new Vector2d(47.2, -10), Math.toRadians(90))
+                .splineTo(new Vector2d(57.5, -15), Math.toRadians(-90))
+                .splineTo(new Vector2d(57.5, -55), Math.toRadians(-90))
                 .strafeToSplineHeading(new Vector2d(57.5, -47), Math.toRadians(270))
                 .build());
 
@@ -113,7 +112,8 @@ public final class RedSpecimens extends LinearOpMode {
         lift.setPower(-0.75);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(57.5, wallPosition, Math.toRadians(270)))
-                .strafeToSplineHeading(new Vector2d(10, -35), Math.toRadians(90))
+                .strafeTo(new Vector2d(57.5, -50))
+                .splineToSplineHeading(new Pose2d(10, -35, Math.toRadians(90)), Math.toRadians(90))
                 .build());
 
         pivot.setPosition(0.5);
@@ -130,8 +130,8 @@ public final class RedSpecimens extends LinearOpMode {
         lift.setPower(0.75);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(10, -40, Math.toRadians(90)))
-                .strafeTo(new Vector2d(57.5, wallPosition+10))
-                .strafeToSplineHeading(new Vector2d(57.5, wallPosition), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(38, wallPosition+10, Math.toRadians(270)), Math.toRadians(270))
+                .strafeTo(new Vector2d(38, wallPosition))
                 .build());
 
         pivot.setPosition(pivotPickup);
@@ -143,9 +143,10 @@ public final class RedSpecimens extends LinearOpMode {
         lift.setPower(-0.75);
         pivot.setPosition(0.027);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(57.5, wallPosition, Math.toRadians(270)))
-                .strafeTo(new Vector2d(57.5, wallPosition+10))
-                .strafeToSplineHeading(new Vector2d(12, chamberPosition), Math.toRadians(90))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(38, wallPosition, Math.toRadians(270)))
+                .strafeTo(new Vector2d(38, wallPosition+10))
+                .splineToSplineHeading(new Pose2d(12, -40, Math.toRadians(90)), Math.toRadians(90))
+                .strafeTo(new Vector2d(12, -33))
                 .build());
 
         pivot.setPosition(0.5);
@@ -160,10 +161,5 @@ public final class RedSpecimens extends LinearOpMode {
         lift.setPower(0.75);
         pivot.setPosition(0.027);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(12, -40, Math.toRadians(90)))
-                .strafeTo(new Vector2d(50,-40))
-                .strafeTo(new Vector2d(64, -9.25))
-                .strafeTo(new Vector2d(64, wallPosition))
-                .build());
     }
 }
