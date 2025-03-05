@@ -13,46 +13,26 @@ public class MeepMeepTesting {
 
         RoadRunnerBotEntity redBucket = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
+                .setConstraints(90, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .build();
 
         redBucket.runAction(redBucket.getDrive().actionBuilder(new Pose2d(-32, -62, Math.toRadians(90)))
-                //claw close
-                //lift up to top basket
                 .splineTo(new Vector2d(-57.4, -55), Math.toRadians(225))
-                //claw open
-                .turn(Math.atan((-57.4+47.7)/(-55+40))-Math.toRadians(15))
-                //lift down
-                .lineToYLinearHeading(-40, Math.toRadians(90))
-                //pivot down
-                .waitSeconds(1.5)
-                //close claw
-                //pivot up
-                //lift up to top basket
+                .lineToY(-52.5)
+                .splineToSplineHeading(new Pose2d(-47.7, -40, Math.toRadians(90)), Math.toRadians(90))
+                .lineToY(-42.5)
                 .splineToSplineHeading(new Pose2d(-57.4, -55, Math.toRadians(225)), Math.toRadians(225))
-                //claw open
-                //lift down
-                .splineTo(new Vector2d(-57.4, -40), Math.toRadians(90))
-                //pivot down
-                .waitSeconds(1.5)
-                //close claw
-                //pivot up
-                //lift up to top basket
-                .splineTo(new Vector2d(-57.4, -55), Math.toRadians(225))
-                //claw open
-                //lift down
-                .splineTo(new Vector2d(-55, -24), Math.toRadians(180))
-                //pivot down
-                .waitSeconds(1.5)
-                //close claw
-                //pivot up
-                //lift up to top basket
-                .splineTo(new Vector2d(-57.4, -55), Math.toRadians(225))
-                //claw open
-                //lift down
-                .lineToY(-40)
-                .splineTo(new Vector2d(-45, 0), Math.toRadians(180))
-                .lineToX(-26)
+                .lineToY(-52.5)
+                .splineToSplineHeading(new Pose2d(-57.7, -40, Math.toRadians(90)), Math.toRadians(90))
+                .lineToY(-42.5)
+                .splineToSplineHeading(new Pose2d(-57.4, -55, Math.toRadians(225)), Math.toRadians(225))
+                .lineToY(-52.5)
+                .splineToSplineHeading(new Pose2d(-52.5, -27.5, Math.toRadians(180)), Math.toRadians(180))
+                .lineToX(-50)
+                .splineToSplineHeading(new Pose2d(-57.4, -55, Math.toRadians(225)), Math.toRadians(225))
+                .lineToY(-52.5)
+                .splineToSplineHeading(new Pose2d(-40, 0, 0),0)
+                .lineToX(-25)
                 .build());
 
         RoadRunnerBotEntity redObservation = new DefaultBotBuilder(meepMeep)
@@ -61,72 +41,57 @@ public class MeepMeepTesting {
                 .build();
 
         redObservation.runAction(redObservation.getDrive().actionBuilder(new Pose2d(20, -60, Math.toRadians(90)))
-                //claw close
-                //lift up to low chamber
-//                .splineToConstantHeading(new Vector2d(8, -33), Math.toRadians(90))
-//                .strafeTo(new Vector2d(8, -40))
-//                .splineTo(new Vector2d(36, -37), Math.toRadians(90))
-//                .splineTo(new Vector2d(36, -10), Math.toRadians(90))
-//                .splineTo(new Vector2d(47.2, -15), Math.toRadians(-90))
-//                .splineTo(new Vector2d(47.2, -60), Math.toRadians(-90))
-//                .splineTo(new Vector2d(47.2, -10), Math.toRadians(90))
-//                .splineTo(new Vector2d(57.5, -15), Math.toRadians(-90))
-//                .splineTo(new Vector2d(57.5, -60), Math.toRadians(-90))
-//                .strafeToSplineHeading(new Vector2d(57.5, -47), Math.toRadians(270))
-//                .strafeTo(new Vector2d(57.5, -60))
-//                .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
-//                .strafeTo(new Vector2d(8, -40))
-//                .splineToSplineHeading(new Pose2d(57.5, -60, Math.toRadians(270)), Math.toRadians(0))
-//                .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
-//                .strafeTo(new Vector2d(8, -40))
-                .splineToSplineHeading(new Pose2d(57.5, -60, Math.toRadians(270)), Math.toRadians(0))
-                .strafeToSplineHeading(new Vector2d(8, -33), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(8, -33), Math.toRadians(90))
+                .strafeTo(new Vector2d(8, -40))
+                .splineTo(new Vector2d(36, -37), Math.toRadians(90))
+                .splineTo(new Vector2d(36, -10), Math.toRadians(90))
+                .splineTo(new Vector2d(47.2, -15), Math.toRadians(-90))
+                .splineTo(new Vector2d(47.2, -60), Math.toRadians(-90))
+                .splineTo(new Vector2d(47.2, -10), Math.toRadians(90))
+                .splineTo(new Vector2d(57.5, -15), Math.toRadians(-90))
+                .splineTo(new Vector2d(57.5, -60), Math.toRadians(-90))
+                .strafeToSplineHeading(new Vector2d(57.5, -47), Math.toRadians(270))
+                .strafeTo(new Vector2d(57.5, -60))
+                .strafeTo(new Vector2d(57.5, -50))
+                .splineToSplineHeading(new Pose2d(8, -33, Math.toRadians(90)), Math.toRadians(90))
+                .strafeTo(new Vector2d(8, -40))
+                .splineToSplineHeading(new Pose2d(38, -50, Math.toRadians(270)), Math.toRadians(270))
+                .strafeTo(new Vector2d(38, -60))
+                .strafeTo(new Vector2d(38, -50))
+                .splineToSplineHeading(new Pose2d(8, -40, Math.toRadians(90)), Math.toRadians(90))
+                .strafeTo(new Vector2d(8, -33))
+                .strafeTo(new Vector2d(8, -40))
+                .splineToSplineHeading(new Pose2d(38, -50, Math.toRadians(270)), Math.toRadians(270))
+                .strafeTo(new Vector2d(38, -60))
+                .strafeTo(new Vector2d(38, -50))
+                .splineToSplineHeading(new Pose2d(8, -40, Math.toRadians(90)), Math.toRadians(90))
+                .strafeTo(new Vector2d(8, -33))
                 .strafeTo(new Vector2d(8, -40))
                 .build());
 
         RoadRunnerBotEntity blueBucket = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
+                .setConstraints(90, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .setColorScheme(new ColorSchemeBlueDark())
                 .build();
 
         blueBucket.runAction(blueBucket.getDrive().actionBuilder(new Pose2d(32, 62, Math.toRadians(-90)))
-                //claw close
-                //lift up to top basket
-                .splineTo(new Vector2d(57.4, 55), Math.toRadians(225-180))
-                //claw open
-                .turn((Math.atan((-57.4+47.7)/(-55+40))-Math.toRadians(15))-Math.toRadians(180))
-                //lift down
-                .lineToYLinearHeading(40, Math.toRadians(-90))
-                //pivot down
-                .waitSeconds(1.5)
-                //close claw
-                //pivot up
-                //lift up to top basket
-                .splineToSplineHeading(new Pose2d(57.4, 55, Math.toRadians(225-180)), Math.toRadians(225-180))
-                //claw open
-                //lift down
-                .splineTo(new Vector2d(57.4, 40), Math.toRadians(-90))
-                //pivot down
-                .waitSeconds(1.5)
-                //close claw
-                //pivot up
-                //lift up to top basket
-                .splineTo(new Vector2d(57.4, 55), Math.toRadians(225-180))
-                //claw open
-                //lift down
-                .splineTo(new Vector2d(55, 24), Math.toRadians(0))
-                //pivot down
-                .waitSeconds(1.5)
-                //close claw
-                //pivot up
-                //lift up to top basket
-                .splineTo(new Vector2d(57.4, 55), Math.toRadians(225-180))
-                //claw open
-                //lift down
-                .lineToY(40)
-                .splineTo(new Vector2d(45, 0), Math.toRadians(0))
-                .lineToX(26)
+                .splineTo(new Vector2d(57.4, 55), Math.toRadians(45))
+                .lineToY(52.5)
+                .splineToSplineHeading(new Pose2d(47.7, 40, Math.toRadians(-90)), Math.toRadians(-90))
+                .lineToY(42.5)
+                .splineToSplineHeading(new Pose2d(57.4, 55, Math.toRadians(45)), Math.toRadians(45))
+                .lineToY(52.5)
+                .splineToSplineHeading(new Pose2d(57.7, 40, Math.toRadians(-90)), Math.toRadians(-90))
+                .lineToY(42.5)
+                .splineToSplineHeading(new Pose2d(57.4, 55, Math.toRadians(45)), Math.toRadians(45))
+                .lineToY(52.5)
+                .splineToSplineHeading(new Pose2d(52.5, 27.5, Math.toRadians(-180)), Math.toRadians(-180))
+                .lineToX(50)
+                .splineToSplineHeading(new Pose2d(57.4, 55, Math.toRadians(45)), Math.toRadians(45))
+                .lineToY(52.5)
+                .splineToSplineHeading(new Pose2d(40, 0.1, 180),180)
+//                .lineToX(25)
                 .build());
 
         RoadRunnerBotEntity blueObservation = new DefaultBotBuilder(meepMeep)
@@ -136,45 +101,32 @@ public class MeepMeepTesting {
                 .build();
 
         blueObservation.runAction(blueObservation.getDrive().actionBuilder(new Pose2d(-20, 60, Math.toRadians(-90)))
-                //claw close
-                //lift up to low chamber
                 .splineToConstantHeading(new Vector2d(-8, 33), Math.toRadians(-90))
-                //pivot down
-                .lineToY(40)
-                //claw open
-                //lift down to ground
-                .strafeTo(new Vector2d(-48, 40))
-                //claw close
-                //pivot up half
-                .splineTo(new Vector2d(-55, 55), Math.toRadians(0))
-                //claw open
-                .strafeTo(new Vector2d(-55, 45))
-                //pivot down
-                .waitSeconds(1.5)
-                .strafeTo(new Vector2d(-55, 55))
-                //claw close
-                //pivot up
-                .strafeTo(new Vector2d(-9, 37))
-                //lift up
-                .turnTo(Math.toRadians(-90))
-                //pivot down
-                .strafeTo(new Vector2d(-9, 33))
-                .strafeTo(new Vector2d(-9, 40))
-                //claw open
-                //lift down
-                //pivot half
-                .strafeToSplineHeading(new Vector2d(-55, 45), Math.toRadians(90))
-                //pivot down
-                .strafeTo(new Vector2d(-55, 55))
-                //claw close
-                //pivot up
-                .strafeTo(new Vector2d(-10, 37))
-                //lift up
-                .turnTo(Math.toRadians(-90))
-                //pivot down
-                .strafeTo(new Vector2d(-10, 33))
-                .strafeTo(new Vector2d(-10, 40))
-                .strafeTo(new Vector2d(-55, 55))
+                .strafeTo(new Vector2d(-8, 40))
+                .splineTo(new Vector2d(-36, 37), Math.toRadians(-90))
+                .splineTo(new Vector2d(-36, 10), Math.toRadians(-90))
+                .splineTo(new Vector2d(-47.2, 15), Math.toRadians(90))
+                .splineTo(new Vector2d(-47.2, 60), Math.toRadians(90))
+                .splineTo(new Vector2d(-47.2, 10), Math.toRadians(-90))
+                .splineTo(new Vector2d(-57.5, 15), Math.toRadians(90))
+                .splineTo(new Vector2d(-57.5, 60), Math.toRadians(-90))
+                .strafeToSplineHeading(new Vector2d(-57.5, 47), Math.toRadians(-270))
+                .strafeTo(new Vector2d(-57.5, 60))
+                .strafeTo(new Vector2d(-57.5, 50))
+                .splineToSplineHeading(new Pose2d(-8, 33, Math.toRadians(-90)), Math.toRadians(-90))
+                .strafeTo(new Vector2d(-8, 40))
+                .splineToSplineHeading(new Pose2d(-38, 50, Math.toRadians(-270)), Math.toRadians(-270))
+                .strafeTo(new Vector2d(-38, 60))
+                .strafeTo(new Vector2d(-38, 50))
+                .splineToSplineHeading(new Pose2d(-8, 40, Math.toRadians(-90)), Math.toRadians(-90))
+                .strafeTo(new Vector2d(-8, 33))
+                .strafeTo(new Vector2d(-8, 40))
+                .splineToSplineHeading(new Pose2d(-38, 50, Math.toRadians(-270)), Math.toRadians(-270))
+                .strafeTo(new Vector2d(-38, 60))
+                .strafeTo(new Vector2d(-38, 50))
+                .splineToSplineHeading(new Pose2d(-8, 40, Math.toRadians(-90)), Math.toRadians(-90))
+                .strafeTo(new Vector2d(-8, 33))
+                .strafeTo(new Vector2d(-8, 40))
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
