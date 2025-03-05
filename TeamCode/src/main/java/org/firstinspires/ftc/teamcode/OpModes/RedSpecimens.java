@@ -51,7 +51,7 @@ public final class RedSpecimens extends LinearOpMode {
         lift = hardwareMap.get(DcMotor.class, "arm");
         pivot = hardwareMap.get(Servo.class, "pivotServo");
         pivot.setPosition(0.027);
-        claw.setPosition(0.3);
+        claw.setPosition(0.35);
 
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -102,15 +102,16 @@ public final class RedSpecimens extends LinearOpMode {
                 .strafeTo(new Vector2d(57.5, wallPosition))
                 .build());
 
-        claw.setPosition(0.3);
-        sleep(250);
-        pivot.setPosition(0.027);
+        claw.setPosition(0.35);
 
-        sleep(400);
+        sleep(750);
 
         lift.setTargetPosition(liftPosition-50);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(-0.75);
+
+        sleep(250);
+        pivot.setPosition(0.027);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(57.5, wallPosition, Math.toRadians(270)))
                 .strafeToSplineHeading(new Vector2d(10, -35), Math.toRadians(90))
@@ -136,7 +137,7 @@ public final class RedSpecimens extends LinearOpMode {
 
         pivot.setPosition(pivotPickup);
 
-        claw.setPosition(0.3);
+        claw.setPosition(0.35);
         sleep(500);
         lift.setTargetPosition(liftPosition-50);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);

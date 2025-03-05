@@ -174,7 +174,7 @@ public class ArcadeDrive extends LinearOpMode {
             if (gamepad1.a || gamepad2.right_bumper) {
                 liftState = 1;
                 pivotState = 1;
-                clawClose = true;
+                clawClose = false;
             }
 
             if (gamepad2.left_bumper) {
