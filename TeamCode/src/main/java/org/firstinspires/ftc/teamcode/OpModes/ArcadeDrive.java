@@ -17,9 +17,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Drawing;
 import org.firstinspires.ftc.teamcode.PinpointDrive;
 
@@ -39,6 +41,8 @@ public class ArcadeDrive extends LinearOpMode {
 
     Servo hanging;
     Servo claw;
+
+    DistanceSensor forwardSensor;
 
     boolean clawClose = true;
     boolean previousButtonState = false;
@@ -70,6 +74,8 @@ public class ArcadeDrive extends LinearOpMode {
 
         liftUp = new ButtonReader(new GamepadEx(gamepad2), GamepadKeys.Button.DPAD_UP);
         liftDown = new ButtonReader(new GamepadEx(gamepad2), GamepadKeys.Button.DPAD_DOWN);
+
+        forwardSensor = hardwareMap.get(DistanceSensor.class, "forwardSensor");
 
         PinpointDrive drive = new PinpointDrive(hardwareMap, new Pose2d(0, -0, Math.toRadians(0)));
 
@@ -171,7 +177,7 @@ public class ArcadeDrive extends LinearOpMode {
                     break;
             }
 
-            if (gamepad1.a || gamepad2.right_bumper) {
+            if (gamepad2.right_bumper) {
                 liftState = 1;
                 pivotState = 1;
                 clawClose = false;
@@ -181,6 +187,18 @@ public class ArcadeDrive extends LinearOpMode {
                 liftState = 4;
                 pivotState = 1;
                 clawClose = true;
+            }
+
+            if (gamepad1.a && forwardSensor.getDistance(DistanceUnit.INCH) < 25) {
+                while (forwardSensor.getDistance(DistanceUnit.INCH) > 10.5) {
+                    drive.setDrivePowers(new PoseVelocity2d(
+                            new Vector2d(
+                                    0.25,
+                                    0
+                            ),
+                            0
+                    ));
+                }
             }
 
             if (liftUp.wasJustPressed()) {
@@ -209,7 +227,7 @@ public class ArcadeDrive extends LinearOpMode {
             previousButtonState = gamepad2.b;
 
             if (clawClose) {
-                claw.setPosition(0.35);
+                claw.setPosition(0.5);
             } else {
                 claw.setPosition(0);
             }

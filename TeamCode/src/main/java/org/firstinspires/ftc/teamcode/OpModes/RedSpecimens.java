@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 
 public final class RedSpecimens extends LinearOpMode {
 
-    int wallPosition = -50;
+    double wallPosition = -48;
     int liftPosition = -450;
     int chamberPosition = -32;
 
@@ -50,8 +50,9 @@ public final class RedSpecimens extends LinearOpMode {
         claw = hardwareMap.get(Servo.class, "claw");
         lift = hardwareMap.get(DcMotor.class, "arm");
         pivot = hardwareMap.get(Servo.class, "pivotServo");
+        claw.setPosition(0.55);
+        sleep(250);
         pivot.setPosition(0.027);
-        claw.setPosition(0.35);
 
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -102,7 +103,7 @@ public final class RedSpecimens extends LinearOpMode {
                 .strafeTo(new Vector2d(57.5, wallPosition))
                 .build());
 
-        claw.setPosition(0.35);
+        claw.setPosition(0.5);
 
         sleep(750);
 
@@ -111,33 +112,68 @@ public final class RedSpecimens extends LinearOpMode {
         lift.setPower(-0.75);
 
         sleep(250);
-        pivot.setPosition(0.027);
+        pivot.setPosition(0.075);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(57.5, wallPosition, Math.toRadians(270)))
-                .strafeToSplineHeading(new Vector2d(10, -35), Math.toRadians(90))
+                .strafeToSplineHeading(new Vector2d(10, -33), Math.toRadians(90))
                 .build());
 
-        pivot.setPosition(0.5);
-
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(10, -35, Math.toRadians(90)))
-                .strafeTo(new Vector2d(10, -40))
-                .build());
-
-        pivot.setPosition(pivotPickup);
-        claw.setPosition(0);
-        sleep(125);
         lift.setTargetPosition(0);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(0.75);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(10, -40, Math.toRadians(90)))
-                .strafeTo(new Vector2d(57.5, wallPosition+10))
-                .strafeToSplineHeading(new Vector2d(57.5, wallPosition), Math.toRadians(270))
+        sleep(250);
+
+        pivot.setPosition(0.075);
+        claw.setPosition(0);
+
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(10, -33, Math.toRadians(90)))
+                .strafeTo(new Vector2d(10, -40))
                 .build());
 
         pivot.setPosition(pivotPickup);
 
-        claw.setPosition(0.35);
+        /*
+
+         */
+
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(10, -40, Math.toRadians(90)))
+                .strafeToSplineHeading(new Vector2d(57.75, wallPosition+10), Math.toRadians(270))
+                .strafeTo(new Vector2d(57.75, wallPosition))
+                .build());
+
+        claw.setPosition(0.55);
+
+        sleep (750);
+
+        pivot.setPosition(0.1);
+
+        lift.setTargetPosition(liftPosition-150);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(-0.75);
+
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(57.75, wallPosition, Math.toRadians(270)))
+                .strafeToSplineHeading(new Vector2d(13, -33.5), Math.toRadians(90))
+                .build());
+
+        lift.setTargetPosition(0);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(0.75);
+
+        sleep(500);
+
+        pivot.setPosition(0.075);
+        claw.setPosition(0);
+
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(13, -33.5, Math.toRadians(90)))
+                .strafeTo(new Vector2d(13, -40))
+                .build());
+
+        pivot.setPosition(pivotPickup);
+
+        /*pivot.setPosition(pivotPickup);
+
+        claw.setPosition(0.5);
         sleep(500);
         lift.setTargetPosition(liftPosition-50);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -165,6 +201,6 @@ public final class RedSpecimens extends LinearOpMode {
                 .strafeTo(new Vector2d(50,-40))
                 .strafeTo(new Vector2d(64, -9.25))
                 .strafeTo(new Vector2d(64, wallPosition))
-                .build());
+                .build());*/
     }
 }

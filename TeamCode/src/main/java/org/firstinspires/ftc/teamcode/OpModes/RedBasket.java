@@ -46,7 +46,7 @@ public final class RedBasket extends LinearOpMode {
         lift = hardwareMap.get(DcMotor.class, "arm");
         pivot = hardwareMap.get(Servo.class, "pivotServo");
         pivot.setPosition(0.027);
-        claw.setPosition(0.3);
+        claw.setPosition(0.5);
 
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -95,17 +95,17 @@ public final class RedBasket extends LinearOpMode {
                 .strafeTo(new Vector2d(-45, -43))
                 .build());
 
-        pivot.setPosition(0.6);
+        pivot.setPosition(0.53);
 
-        sleep(250);
+        sleep(750);
 
-        claw.setPosition(0.3);
+        claw.setPosition(0.5);
 
-        sleep(250);
+        sleep(500);
 
         pivot.setPosition(0.027);
 
-        lift.setTargetPosition(liftPosition-50);
+        lift.setTargetPosition(-790);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(-1);
 
@@ -113,55 +113,55 @@ public final class RedBasket extends LinearOpMode {
                 .strafeToSplineHeading(new Vector2d(-54, -54), Math.toRadians(225))
                 .build()
         );
+
+        claw.setPosition(0);
+
+        sleep(250);
+
+        lift.setTargetPosition(0);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(1);
 //
-//        claw.setPosition(0);
-//
-//        sleep(250);
-//
-//        lift.setTargetPosition(0);
-//        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        lift.setPower(1);
-////
-//        Actions.runBlocking(drive.actionBuilder(new Pose2d(-52, -50, Math.toRadians(225)))
-//                .strafeToSplineHeading(new Vector2d(-54, -35), Math.toRadians(90))
-//                .build()
-//        );
-//
-//        while (lift.isBusy()) {
-//            sleep(10);
-//        }
-//
-//        pivot.setPosition(0.45);
-//        sleep(500);
-//
-//        pivot.setPosition(0.53);
-//        sleep(750);
-//        claw.setPosition(0.3);
-//        sleep(500);
-//        pivot.setPosition(0.027);
-//
-//        lift.setTargetPosition(-2750 / 5);
-//        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        while (lift.isBusy()) {
-//            lift.setPower(-1);
-//            sleep(10);
-//        }
-//
-//        Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-54, -35), Math.toRadians(90)))
-//                .strafeToSplineHeading(new Vector2d(-52, -50), Math.toRadians(225))
-//                .build()
-//        );
-//
-//        claw.setPosition(0);
-//        sleep(500);
-//
-//        Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-52, -50), Math.toRadians(225)))
-//                .strafeToSplineHeading(new Vector2d(-48, 0), Math.toRadians(0))
-//                .strafeTo(new Vector2d(-0, 0))
-//                .build()
-//        );
-//
-//        pivot.setPosition(0.25);
-//        sleep(500);
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(-54, -54, Math.toRadians(225)))
+                .strafeToSplineHeading(new Vector2d(-54, -43), Math.toRadians(90))
+                .build()
+        );
+
+        while (lift.isBusy()) {
+            sleep(10);
+        }
+
+        pivot.setPosition(0.45);
+        sleep(500);
+
+        pivot.setPosition(0.53);
+        sleep(750);
+        claw.setPosition(0.5);
+        sleep(750);
+        pivot.setPosition(0.027);
+
+        lift.setTargetPosition(-790);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (lift.isBusy()) {
+            lift.setPower(-1);
+            sleep(10);
+        }
+
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-54, -43), Math.toRadians(90)))
+                .strafeToSplineHeading(new Vector2d(-54, -54), Math.toRadians(225))
+                .build()
+        );
+
+        claw.setPosition(0);
+        sleep(500);
+
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(new Vector2d(-54, -54), Math.toRadians(225)))
+                .strafeToSplineHeading(new Vector2d(-48, 0), Math.toRadians(0))
+                .strafeTo(new Vector2d(-0, 0))
+                .build()
+        );
+
+        pivot.setPosition(0.25);
+        sleep(500);
     }
 }
