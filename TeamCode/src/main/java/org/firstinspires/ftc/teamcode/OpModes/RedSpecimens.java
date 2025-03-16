@@ -23,12 +23,14 @@ import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 public final class RedSpecimens extends LinearOpMode {
 
     double wallPosition = -48;
-    int liftPosition = -450;
+    int liftPosition = -625;
     int chamberPosition = -32;
 
     double pivotPickup = 0.30;
 
     boolean continuePath = false;
+
+    double XoffsetInches = 7;
 
     Servo claw;
     DcMotor lift;
@@ -42,7 +44,8 @@ public final class RedSpecimens extends LinearOpMode {
         rightSensor = hardwareMap.get(DistanceSensor.class, "rightSensor");
         forwardSensor = hardwareMap.get(DistanceSensor.class, "forwardSensor");
 
-//        Pose2d beginPose = new Pose2d(72 - rightSensor.getDistance(DistanceUnit.INCH), -60, Math.toRadians(90));
+//        Pose2d beginPose = new Pose2d(72 - (rightSensor.getDistance(DistanceUnit.INCH) + XoffsetInches), -60, Math.toRadians(90));
+        telemetry.addData("positionX", rightSensor.getDistance(DistanceUnit.INCH));
         Pose2d beginPose = new Pose2d(9.5, -60, Math.toRadians(90));
         Pose2d currentPose = beginPose;
         PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
@@ -139,7 +142,7 @@ public final class RedSpecimens extends LinearOpMode {
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(10, -40, Math.toRadians(90)))
                 .strafeToSplineHeading(new Vector2d(57.75, wallPosition+10), Math.toRadians(270))
-                .strafeTo(new Vector2d(57.75, wallPosition))
+                .strafeTo(new Vector2d(57.75, wallPosition+2))
                 .build());
 
         claw.setPosition(0.55);
@@ -160,7 +163,7 @@ public final class RedSpecimens extends LinearOpMode {
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(0.75);
 
-        sleep(500);
+        sleep(750);
 
         pivot.setPosition(0.075);
         claw.setPosition(0);
@@ -170,37 +173,5 @@ public final class RedSpecimens extends LinearOpMode {
                 .build());
 
         pivot.setPosition(pivotPickup);
-
-        /*pivot.setPosition(pivotPickup);
-
-        claw.setPosition(0.5);
-        sleep(500);
-        lift.setTargetPosition(liftPosition-50);
-        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lift.setPower(-0.75);
-        pivot.setPosition(0.027);
-
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(57.5, wallPosition, Math.toRadians(270)))
-                .strafeTo(new Vector2d(57.5, wallPosition+10))
-                .strafeToSplineHeading(new Vector2d(12, chamberPosition), Math.toRadians(90))
-                .build());
-
-        pivot.setPosition(0.5);
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(12, chamberPosition, Math.toRadians(90)))
-                .strafeTo(new Vector2d(12, -40))
-                .build());
-
-        claw.setPosition(0);
-        sleep(150);
-        lift.setTargetPosition(0);
-        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lift.setPower(0.75);
-        pivot.setPosition(0.027);
-
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(12, -40, Math.toRadians(90)))
-                .strafeTo(new Vector2d(50,-40))
-                .strafeTo(new Vector2d(64, -9.25))
-                .strafeTo(new Vector2d(64, wallPosition))
-                .build());*/
     }
 }

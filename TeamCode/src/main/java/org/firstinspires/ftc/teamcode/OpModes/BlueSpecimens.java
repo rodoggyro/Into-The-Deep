@@ -22,11 +22,13 @@ import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 
 public final class BlueSpecimens extends LinearOpMode {
 
-    int wallPosition = -50;
-    int liftPosition = -450;
+    double wallPosition = -48;
+    int liftPosition = -625;
     int chamberPosition = -32;
 
     double pivotPickup = 0.30;
+
+    double XoffsetInches = 7;
 
     boolean continuePath = false;
 
@@ -50,8 +52,9 @@ public final class BlueSpecimens extends LinearOpMode {
         claw = hardwareMap.get(Servo.class, "claw");
         lift = hardwareMap.get(DcMotor.class, "arm");
         pivot = hardwareMap.get(Servo.class, "pivotServo");
+        claw.setPosition(0.55);
+        sleep(250);
         pivot.setPosition(0.027);
-        claw.setPosition(0.3);
 
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -69,14 +72,14 @@ public final class BlueSpecimens extends LinearOpMode {
 
         pivot.setPosition(0.5);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(8, -35, Math.toRadians(90)))
-                .strafeTo(new Vector2d(8, -40))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(7, -35, Math.toRadians(90)))
+                .strafeTo(new Vector2d(7, -40))
                 .build());
 
         claw.setPosition(0);
         pivot.setPosition(pivotPickup);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(8, -40, Math.toRadians(90)))
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(7, -40, Math.toRadians(90)))
                 .strafeTo(new Vector2d(36, -37))
                 .build());
 
@@ -102,69 +105,70 @@ public final class BlueSpecimens extends LinearOpMode {
                 .strafeTo(new Vector2d(57.5, wallPosition))
                 .build());
 
-        claw.setPosition(0.3);
-        sleep(250);
-        pivot.setPosition(0.027);
+        claw.setPosition(0.5);
 
-        sleep(400);
+        sleep(500);
 
         lift.setTargetPosition(liftPosition-50);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(-0.75);
+        pivot.setPosition(0.075);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(57.5, wallPosition, Math.toRadians(270)))
-                .strafeTo(new Vector2d(57.5, wallPosition+10))
-                .strafeToSplineHeading(new Vector2d(10, chamberPosition - 5), Math.toRadians(90))
+                .strafeToSplineHeading(new Vector2d(10, -33), Math.toRadians(90))
                 .build());
 
-        pivot.setPosition(0.5);
+        lift.setTargetPosition(0);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(0.75);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(10, chamberPosition-5, Math.toRadians(90)))
+        sleep(250);
+
+        pivot.setPosition(0.075);
+        claw.setPosition(0);
+
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(10, -33, Math.toRadians(90)))
                 .strafeTo(new Vector2d(10, -40))
                 .build());
 
         pivot.setPosition(pivotPickup);
-        claw.setPosition(0);
-        sleep(125);
+
+        /*
+
+         */
+
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(10, -40, Math.toRadians(90)))
+                .strafeToSplineHeading(new Vector2d(57.75, wallPosition+10), Math.toRadians(270))
+                .strafeTo(new Vector2d(57.75, wallPosition))
+                .build());
+
+        claw.setPosition(0.55);
+
+        sleep (500);
+
+        pivot.setPosition(0.1);
+
+        lift.setTargetPosition(liftPosition-150);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(-0.75);
+
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(57.75, wallPosition, Math.toRadians(270)))
+                .strafeToSplineHeading(new Vector2d(13, -34), Math.toRadians(90))
+                .build());
+
         lift.setTargetPosition(0);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(0.75);
 
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(10, -40, Math.toRadians(90)))
-                .strafeTo(new Vector2d(40, wallPosition+10))
-                .strafeToSplineHeading(new Vector2d(40, wallPosition), Math.toRadians(270))
+        sleep(750);
+
+        pivot.setPosition(0.075);
+        claw.setPosition(0);
+
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(13, -33.5, Math.toRadians(90)))
+                .strafeTo(new Vector2d(13, -40))
                 .build());
 
         pivot.setPosition(pivotPickup);
-
-        claw.setPosition(0.3);
-        sleep(500);
-        lift.setTargetPosition(liftPosition-50);
-        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lift.setPower(-0.75);
-        pivot.setPosition(0.027);
-
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(40, wallPosition, Math.toRadians(270)))
-                .strafeTo(new Vector2d(40, wallPosition+10))
-                .strafeToSplineHeading(new Vector2d(12, chamberPosition-3), Math.toRadians(90))
-                .build());
-
-        pivot.setPosition(0.5);
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(12, chamberPosition-3, Math.toRadians(90)))
-                .strafeTo(new Vector2d(12, -40))
-                .build());
-
-        claw.setPosition(0);
-        sleep(150);
-        lift.setTargetPosition(0);
-        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lift.setPower(0.75);
-        pivot.setPosition(0.027);
-
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(12, -40, Math.toRadians(90)))
-                .strafeTo(new Vector2d(50,-40))
-                .strafeTo(new Vector2d(64, -9.25))
-                .strafeTo(new Vector2d(64, wallPosition))
-                .build());
     }
 }

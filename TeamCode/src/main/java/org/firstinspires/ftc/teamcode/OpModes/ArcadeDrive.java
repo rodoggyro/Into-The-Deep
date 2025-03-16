@@ -164,16 +164,16 @@ public class ArcadeDrive extends LinearOpMode {
                     target = 78;
                     break;
                 case 1:
-                    target = 154;
+                    target = 225;
                     break;
                 case 2:
                     target = 332;
                     break;
                 case 3:
-                    target = 581;
+                    target = 800;
                     break;
                 case 4:
-                    target = 790;
+                    target = 1300;
                     break;
             }
 
