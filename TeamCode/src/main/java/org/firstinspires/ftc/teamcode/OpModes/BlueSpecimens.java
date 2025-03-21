@@ -139,7 +139,7 @@ public final class BlueSpecimens extends LinearOpMode {
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(10, -40, Math.toRadians(90)))
                 .strafeToSplineHeading(new Vector2d(57.75, wallPosition+10), Math.toRadians(270))
-                .strafeTo(new Vector2d(57.75, wallPosition))
+                .strafeTo(new Vector2d(57.75, wallPosition+0.5))
                 .build());
 
         claw.setPosition(0.55);

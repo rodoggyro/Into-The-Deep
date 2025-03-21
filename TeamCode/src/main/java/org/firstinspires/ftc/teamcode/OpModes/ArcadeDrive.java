@@ -212,7 +212,7 @@ public class ArcadeDrive extends LinearOpMode {
             }
 
             arm.setTargetPosition(target);
-            arm.set(0.05);
+            arm.set(0.01);
 
             if (gamepad2.b && !previousButtonState && clawDebounceComplete) {
                 clawClose = !clawClose;

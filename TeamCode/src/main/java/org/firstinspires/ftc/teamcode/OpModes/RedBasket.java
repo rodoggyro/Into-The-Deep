@@ -123,7 +123,7 @@ public final class RedBasket extends LinearOpMode {
         lift.setPower(1);
 //
         Actions.runBlocking(drive.actionBuilder(new Pose2d(-56, -52, Math.toRadians(225)))
-                .strafeToSplineHeading(new Vector2d(-57, -44), Math.toRadians(90))
+                .strafeToSplineHeading(new Vector2d(-57, -43), Math.toRadians(90))
                 .build()
         );
 
